@@ -1,9 +1,9 @@
-import 'package:cyclecheck/src/ui/widgets/accent_outline_button.dart';
 import 'package:flutter/material.dart';
 
-import 'package:cyclecheck/src/ui/screens/screen.dart';
-import 'package:cyclecheck/src/ui/widgets/accent_line.dart';
 import 'package:cyclecheck/src/ui/nav.dart';
+import 'package:cyclecheck/src/ui/widgets/accent_line.dart';
+import 'package:cyclecheck/src/ui/widgets/accent_outline_button.dart';
+import 'package:cyclecheck/src/ui/screens/screen.dart';
 
 class WelcomeScreen extends StatelessScreen {
   static const routeName = 'welcome';
@@ -16,13 +16,12 @@ class WelcomeScreen extends StatelessScreen {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Flexible(
-              flex: 9,
+            Expanded(
               child: _welcomeSettings(context),
             ),
-            Flexible(
-              flex: 1,
-              child: _buildFooter(context),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: ContinueButton(),
             ),
           ],
         ),
@@ -43,8 +42,15 @@ class WelcomeScreen extends StatelessScreen {
       ],
     );
   }
+}
 
-  Widget _buildFooter(BuildContext context) {
+class ContinueButton extends StatelessWidget {
+  const ContinueButton({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
