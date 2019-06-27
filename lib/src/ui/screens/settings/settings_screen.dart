@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
 
-import 'package:cyclecheck/src/ui/screens/screen.dart';
+import 'package:cyclecheck/src/ui/screens/widgets/screen_header.dart';
+import 'package:cyclecheck/src/ui/screens/widgets/screen.dart';
 
-class SettingsScreen extends StatelessScreen {
+class SettingsScreen extends StatelessWidget {
   static const routeName = '/settings';
 
   @override
-  Widget buildScreen(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: [
-          Text('Settings'),
-        ],
-      ),
+  Widget build(BuildContext context) {
+    return Screen(
+      header: ScreenHeader(text: 'Settings'),
+      children: [],
     );
   }
 }

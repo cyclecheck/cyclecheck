@@ -6,7 +6,7 @@ class AccentLine extends Container {
   AccentLine({
     Key key,
     @required double width,
-    double height = 2,
+    double height = 1.25,
   })  : assert(width > 0),
         super(
           key: key,

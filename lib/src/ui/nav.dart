@@ -22,11 +22,11 @@ class Nav {
   }
 
   static toWelcome(BuildContext context) {
-    _navigate(context, WelcomeScreen.routeName);
+    _navigate(context, WelcomeScreen.routeName, clear: true);
   }
 
   static toHome(BuildContext context) {
-    Navigator.pushReplacementNamed(context, HomeScreen.routeName);
+    _navigate(context, HomeScreen.routeName, clear: true);
   }
 
   static toSettings(BuildContext context) {
@@ -37,7 +37,13 @@ class Nav {
     _navigate(context, AboutScreen.routeName);
   }
 
-  static _navigate(BuildContext context, String destination) {
-    Navigator.pushNamed(context, destination);
+  static _navigate(
+    BuildContext context,
+    String destination, {
+    bool clear = false,
+  }) {
+    final navMethod =
+        clear ? Navigator.pushReplacementNamed : Navigator.pushNamed;
+    navMethod(context, destination);
   }
 }

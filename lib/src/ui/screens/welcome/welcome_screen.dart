@@ -1,44 +1,25 @@
 import 'package:flutter/material.dart';
 
 import 'package:cyclecheck/src/ui/nav.dart';
-import 'package:cyclecheck/src/ui/widgets/accent_line.dart';
+import 'package:cyclecheck/src/ui/screens/widgets/screen.dart';
 import 'package:cyclecheck/src/ui/widgets/accent_outline_button.dart';
-import 'package:cyclecheck/src/ui/screens/screen.dart';
+import 'package:cyclecheck/src/ui/screens/widgets/screen_header.dart';
 
-class WelcomeScreen extends StatelessScreen {
+class WelcomeScreen extends StatelessWidget {
   static const routeName = 'welcome';
 
   @override
-  Widget buildScreen(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        margin: EdgeInsets.only(left: 32.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: _welcomeSettings(context),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: ContinueButton(),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _welcomeSettings(BuildContext context) {
-    final theme = Theme.of(context);
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+  Widget build(BuildContext context) {
+    return Screen(
+      header: ScreenHeader(text: 'Welcome'),
       children: [
-        Text(
-          'Welcome',
-          style: theme.textTheme.title,
+        Expanded(
+          child: Container(),
         ),
-        AccentLine(width: 200),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          child: ContinueButton(),
+        ),
       ],
     );
   }
