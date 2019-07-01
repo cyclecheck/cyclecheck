@@ -11,10 +11,20 @@ class WelcomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Screen(
-      header: ScreenHeader(text: 'Welcome'),
+      header: ScreenHeader(
+        text: 'Welcome',
+        children: [
+          Container(
+            width: 200,
+            child: Text('To get started I need some information from you.'),
+          ),
+        ],
+      ),
       children: [
         Expanded(
-          child: Container(),
+          child: Container(
+            child: Text('Units:'),
+          ),
         ),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 8.0),

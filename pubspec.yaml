@@ -11,8 +11,12 @@ dependencies:
     sdk: flutter
   url_launcher: 5.0.3
   package_info: 0.4.0+4
-
+  provider: 3.0.0+1
+  shared_preferences: 0.5.3+1
   cupertino_icons: ^0.1.2
+
+  cyclecheck_api:
+    path: ../cyclecheck_api
 
 dev_dependencies:
   flutter_test:
