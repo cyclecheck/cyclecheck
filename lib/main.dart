@@ -1,18 +1,28 @@
 import 'package:flutter/material.dart';
 
+import 'package:cyclecheck/src/data/settings/settings_service.dart';
+import 'package:cyclecheck/src/data/settings/settings_repository.dart';
 import 'package:cyclecheck/src/config/colors.dart';
 import 'package:cyclecheck/src/ui/nav.dart';
+import 'package:provider/provider.dart';
 
 void main() => runApp(CycleCheck());
 
 class CycleCheck extends StatelessWidget {
+  final _settingsRepository = SettingsRepository();
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'CycleCheck',
-      theme: _buildTheme(),
-      initialRoute: Nav.initialRoute(context),
-      routes: Nav.buildRoutes(context),
+    return MultiProvider(
+      providers: [
+        Provider<SettingsRepository>.value(value: _settingsRepository),
+      ],
+      child: MaterialApp(
+        title: 'CycleCheck',
+        theme: _buildTheme(),
+        initialRoute: Nav.initialRoute(context),
+        routes: Nav.buildRoutes(context),
+      ),
     );
   }
 

@@ -7,7 +7,11 @@ class AboutUrl {
   final IconData icon;
   final String url;
 
-  const AboutUrl(this.text, this.icon, this.url);
+  const AboutUrl(
+    this.text,
+    this.icon,
+    this.url,
+  );
 
   static const List<AboutUrl> _all = [
     AboutUrl(
