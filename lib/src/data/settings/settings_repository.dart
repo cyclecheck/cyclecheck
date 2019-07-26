@@ -58,11 +58,11 @@ class SettingsRepository {
     return results.every((wasSuccess) => wasSuccess);
   }
 
-  /// Get the saved Google Place ID for use with the weather service.
-  Future<String> getSavedPlaceId() => _settingsService.getPlaceId();
+  /// Get the saved Google Place for use with the weather service.
+  Future<Place> getSavedPlace() => _settingsService.getPlace();
 
-  /// Save the selected Place ID.
-  savePlaceId(String placeId) {
-    _settingsService.savePlaceId(placeId);
+  /// Save the selected Place.
+  savePlace(Place place) {
+    _settingsService.savePlace(place);
   }
 }

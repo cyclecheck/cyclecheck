@@ -1,23 +1,27 @@
+import 'dart:convert';
+
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:cyclecheck_api/cyclecheck_api.dart';
 
 typedef PrefsProvider = Future<SharedPreferences> Function();
 
 class SettingsService {
-  PrefsProvider _prefsProvider = () => SharedPreferences.getInstance();
+  PrefsProvider _prefsProvider;
 
   SettingsService({
     PrefsProvider prefsProvider,
-  });
+  }) {
+    _prefsProvider = prefsProvider ?? () => SharedPreferences.getInstance();
+  }
 
   Future<bool> isFirstRun() async => _bool(
-        _SettingsKeys.isFirstRun,
+        _Keys.isFirstRun,
         defaultValue: true,
       );
 
   Future<Unit> getUnit() async {
     try {
-      return Unit.from(await _string(_SettingsKeys.units));
+      return Unit.from(await _string(_Keys.units));
     } catch (error) {
       return Unit.defaultUnit;
     }
@@ -25,44 +29,50 @@ class SettingsService {
 
   Future<bool> saveUnit(Unit unit) async {
     final prefs = await _prefsProvider();
-    return prefs.setString(_SettingsKeys.units, unit.value);
+    return prefs.setString(_Keys.units, unit.value);
   }
 
-  Future<String> getPlaceId() => _string(_SettingsKeys.selectedPlaceId);
+  Future<Place> getPlace() async {
+    final string = await _string(_Keys.selectedPlace);
 
-  Future<bool> savePlaceId(String placeId) async {
+    if (string == null) return null;
+    return Place.fromJson(jsonDecode(string));
+  }
+
+  Future<bool> savePlace(Place place) async {
     final prefs = await _prefsProvider();
-    return prefs.setString(_SettingsKeys.selectedPlaceId, placeId);
+    final jsonString = jsonEncode(place);
+    return prefs.setString(_Keys.selectedPlace, jsonString);
   }
 
   Future<int> getMinTemperature() => _int(
-        _SettingsKeys.minTemperature,
+        _Keys.minTemperature,
         defaultValue: CycleScoreSettings.DEFAULT_MIN_TEMP,
       );
 
   Future<bool> saveMinTemperature(int minTemp) async {
     final prefs = await _prefsProvider();
-    return prefs.setInt(_SettingsKeys.minTemperature, minTemp);
+    return prefs.setInt(_Keys.minTemperature, minTemp);
   }
 
   Future<int> getMaxTemperature() => _int(
-        _SettingsKeys.maxTemperature,
+        _Keys.maxTemperature,
         defaultValue: CycleScoreSettings.DEFAULT_MAX_TEMP,
       );
 
   Future<bool> saveMaxTemperature(int maxTemp) async {
     final prefs = await _prefsProvider();
-    return prefs.setInt(_SettingsKeys.maxTemperature, maxTemp);
+    return prefs.setInt(_Keys.maxTemperature, maxTemp);
   }
 
   Future<int> getMaxWindSpeed() => _int(
-        _SettingsKeys.maxWindSpeed,
+        _Keys.maxWindSpeed,
         defaultValue: CycleScoreSettings.DEFAULT_MAX_WIND,
       );
 
   Future<bool> saveMaxWindSpeed(int windSpeed) async {
     final prefs = await _prefsProvider();
-    return prefs.setInt(_SettingsKeys.maxWindSpeed, windSpeed);
+    return prefs.setInt(_Keys.maxWindSpeed, windSpeed);
   }
 
   Future<String> _string(String key, {String defaultValue}) async {
@@ -81,10 +91,10 @@ class SettingsService {
   }
 }
 
-class _SettingsKeys {
+class _Keys {
   static const String isFirstRun = 'is_first_run';
   static const String units = 'units';
-  static const String selectedPlaceId = 'place_id';
+  static const String selectedPlace = 'place';
   static const String minTemperature = 'minimum_temperature';
   static const String maxTemperature = 'maximum_temperature';
   static const String maxWindSpeed = 'max_wind_speed';

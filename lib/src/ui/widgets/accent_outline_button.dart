@@ -16,8 +16,9 @@ class AccentOutlineButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return OutlineButton(
-      child: this.child,
+      child: child,
       highlightedBorderColor: AppColors.accent,
+      highlightColor: AppColors.accent,
       borderSide: BorderSide(
         color: AppColors.accent,
         width: 2.0,
@@ -25,7 +26,38 @@ class AccentOutlineButton extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(Dimens.circle_radius),
       ),
-      onPressed: this.onPressed,
+      onPressed: onPressed,
     );
+  }
+}
+
+class AccentToggleButton extends StatelessWidget {
+  final bool isToggled;
+  final Function onPressed;
+  final Widget child;
+
+  const AccentToggleButton({
+    Key key,
+    @required this.isToggled,
+    @required this.onPressed,
+    @required this.child,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return isToggled
+        ? FlatButton(
+            child: child,
+            onPressed: () {},
+            textColor: AppColors.textColor,
+            color: AppColors.accent,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(Dimens.circle_radius),
+            ),
+          )
+        : AccentOutlineButton(
+            child: child,
+            onPressed: onPressed,
+          );
   }
 }

@@ -3,13 +3,13 @@ import 'package:cyclecheck_api/cyclecheck_api.dart';
 
 import 'package:cyclecheck/src/data/settings/settings_repository.dart';
 
-class SettingsState extends ChangeNotifier {
+class SettingsBloc extends ChangeNotifier {
   final SettingsRepository _settingsRepository;
 
   CycleScoreSettings _settings = CycleScoreSettings.defaultSettings;
   CycleScoreSettings get settings => _settings;
 
-  SettingsState(this._settingsRepository) {
+  SettingsBloc(this._settingsRepository) {
     _init();
   }
 
@@ -18,9 +18,13 @@ class SettingsState extends ChangeNotifier {
     notifyListeners();
   }
 
-  save(CycleScoreSettings settings) {
-    _settingsRepository.saveCycleScoreSettings(settings);
+  save(CycleScoreSettings settings) async {
+    await _settingsRepository.saveCycleScoreSettings(settings);
     _settings = settings;
-    notifyListeners()
+    notifyListeners();
+  }
+
+  setUnit(Unit unit) {
+    save(_settings.merge(CycleScoreSettings(units: unit)));
   }
 }
