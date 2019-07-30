@@ -27,4 +27,12 @@ class SettingsBloc extends ChangeNotifier {
   setUnit(Unit unit) {
     save(_settings.merge(CycleScoreSettings(units: unit)));
   }
+
+  setTemperatures(double min, double max) {
+    final settings = _settings.merge(
+      CycleScoreSettings(minTemp: min.round(), maxTemp: max.round()),
+    );
+
+    save(settings);
+  }
 }

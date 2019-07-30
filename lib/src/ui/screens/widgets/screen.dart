@@ -6,6 +6,9 @@ class Screen extends StatelessWidget {
   final EdgeInsets margin;
   final MainAxisAlignment mainAxisAlignment;
   final CrossAxisAlignment crossAxisAlignment;
+  final AppBar appBar;
+  final Widget titleText;
+  final Color titleColor;
 
   const Screen({
     Key key,
@@ -14,17 +17,31 @@ class Screen extends StatelessWidget {
     this.margin = const EdgeInsets.symmetric(horizontal: 32.0),
     this.mainAxisAlignment = MainAxisAlignment.start,
     this.crossAxisAlignment = CrossAxisAlignment.start,
+    this.appBar,
+    this.titleText,
+    this.titleColor,
   })  : assert(children != null),
         super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-      ),
-      body: SafeArea(
+      appBar: appBar ??
+          AppBar(
+            backgroundColor: titleColor ?? Colors.transparent,
+            elevation: 0,
+            title: titleText,
+          ),
+      body: header == null
+          ? Padding(
+              padding: EdgeInsets.only(top: 16.0),
+              child: _buildBody(),
+            )
+          : _buildBody(),
+    );
+  }
+
+  Widget _buildBody() => SafeArea(
         child: Container(
           margin: margin,
           width: double.infinity,
@@ -37,22 +54,5 @@ class Screen extends StatelessWidget {
             ],
           ),
         ),
-      ),
-    );
-  }
+      );
 }
-
-// bottomNavigationBar: BottomAppBar(
-//         elevation: 0,
-//         color: Colors.transparent,
-//         child: Padding(
-//           padding: const EdgeInsets.all(8.0),
-//           child: Row(
-//             mainAxisSize: MainAxisSize.max,
-//             mainAxisAlignment: MainAxisAlignment.start,
-//             children: [
-//               Icon(Icons.arrow_back_ios),
-//             ],
-//           ),
-//         ),
-//       ),
