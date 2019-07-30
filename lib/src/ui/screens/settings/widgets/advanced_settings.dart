@@ -21,11 +21,11 @@ class AdvancedSettings extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16.0),
+          padding: const EdgeInsets.only(top: 16),
           child: TemperatureSettings(),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16.0),
+          padding: const EdgeInsets.only(top: 16),
           child: WindSpeedSettings(),
         ),
       ],

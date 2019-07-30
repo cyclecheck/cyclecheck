@@ -43,6 +43,7 @@ class SettingsScreen extends StatelessWidget {
             child: UnitSettings(),
           ),
           AdvancedSettings(),
+          Padding(padding: const EdgeInsets.only(top: 16.0)),
         ],
       ),
     );
