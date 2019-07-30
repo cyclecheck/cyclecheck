@@ -35,4 +35,12 @@ class SettingsBloc extends ChangeNotifier {
 
     save(settings);
   }
+
+  setWindSpeed(double speed) {
+    final settings = _settings.merge(
+      CycleScoreSettings(maxWind: speed.round()),
+    );
+
+    save(settings);
+  }
 }

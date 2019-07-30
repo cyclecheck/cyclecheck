@@ -9,6 +9,7 @@ class Screen extends StatelessWidget {
   final AppBar appBar;
   final Widget titleText;
   final Color titleColor;
+  final bool scrollable;
 
   const Screen({
     Key key,
@@ -20,6 +21,7 @@ class Screen extends StatelessWidget {
     this.appBar,
     this.titleText,
     this.titleColor,
+    this.scrollable = false,
   })  : assert(children != null),
         super(key: key);
 
@@ -43,16 +45,19 @@ class Screen extends StatelessWidget {
 
   Widget _buildBody() => SafeArea(
         child: Container(
-          margin: margin,
-          width: double.infinity,
-          child: Column(
-            crossAxisAlignment: crossAxisAlignment,
-            mainAxisAlignment: mainAxisAlignment,
-            children: [
-              if (header != null) header,
-              ...children,
-            ],
-          ),
-        ),
+            margin: margin,
+            width: double.infinity,
+            child: scrollable
+                ? SingleChildScrollView(child: _buildContent())
+                : _buildContent()),
+      );
+
+  Widget _buildContent() => Column(
+        crossAxisAlignment: crossAxisAlignment,
+        mainAxisAlignment: mainAxisAlignment,
+        children: [
+          if (header != null) header,
+          ...children,
+        ],
       );
 }
