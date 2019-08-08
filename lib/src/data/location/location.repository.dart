@@ -2,10 +2,10 @@ import 'package:cyclecheck_api/cyclecheck_api.dart';
 
 import 'package:cyclecheck/src/data/location/location_service.dart';
 
-class LocationRepository {
+class LocationRepo {
   LocationService _locationService;
 
-  LocationRepository({
+  LocationRepo({
     LocationService locationService,
   }) {
     _locationService = locationService ?? LocationService();

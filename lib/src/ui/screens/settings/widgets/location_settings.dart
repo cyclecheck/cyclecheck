@@ -21,7 +21,7 @@ class LocationSettings extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.only(top: 8.0),
-              child: _createLocationButton(value),
+              child: LocationButton(),
             ),
             if (state.place != null) Text("Selected: ${state.place.city}"),
           ],
@@ -29,8 +29,19 @@ class LocationSettings extends StatelessWidget {
       },
     );
   }
+}
 
-  Widget _createLocationButton(LocationBloc bloc) {
+class LocationButton extends StatelessWidget {
+  final String text;
+
+  const LocationButton({
+    Key key,
+    this.text = "Get Location",
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final bloc = Provider.of<LocationBloc>(context);
     final statusIcon = _getStatusIcon(bloc.state);
 
     return AccentOutlineButton(
@@ -38,14 +49,15 @@ class LocationSettings extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text("Get Location"),
+          Text(text),
           if (statusIcon != null)
             Padding(
-                padding: EdgeInsets.only(left: 4),
-                child: Icon(
-                  statusIcon,
-                  size: 14,
-                ))
+              padding: EdgeInsets.only(left: 4),
+              child: Icon(
+                statusIcon,
+                size: 14,
+              ),
+            )
         ],
       ),
     );

@@ -16,19 +16,16 @@ class SettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _settingsRepository = Provider.of<SettingsRepository>(context);
-    final _locationRepository = Provider.of<LocationRepository>(context);
-    final providers = [
-      ChangeNotifierProvider(
-        builder: (_) => SettingsBloc(_settingsRepository),
-      ),
-      ChangeNotifierProvider(
-        builder: (_) => LocationBloc(_settingsRepository, _locationRepository),
-      ),
-    ];
-
     return MultiProvider(
-      providers: providers,
+      providers: [
+        ChangeNotifierProxyProvider<SettingsRepo, SettingsBloc>(
+          builder: (_, repo, bloc) => bloc ?? SettingsBloc(repo),
+        ),
+        ChangeNotifierProxyProvider2<SettingsRepo, LocationRepo, LocationBloc>(
+          builder: (_, settings, location, bloc) =>
+              bloc ?? LocationBloc(settings, location),
+        ),
+      ],
       child: Screen(
         titleText: Text("Settings"),
         titleColor: AppColors.primary,

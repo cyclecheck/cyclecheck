@@ -2,13 +2,13 @@ import 'package:cyclecheck_api/cyclecheck_api.dart';
 
 import 'package:cyclecheck/src/data/settings/settings_service.dart';
 
-class SettingsRepository {
+class SettingsRepo {
   SettingsService _settingsService;
   CycleScoreSettings _cachedSettings;
 
   bool get _emptyCache => _cachedSettings == null;
 
-  SettingsRepository({
+  SettingsRepo({
     SettingsService service,
   }) {
     _settingsService = service ?? SettingsService();

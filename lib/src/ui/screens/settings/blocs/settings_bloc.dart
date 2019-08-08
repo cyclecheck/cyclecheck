@@ -4,7 +4,7 @@ import 'package:cyclecheck_api/cyclecheck_api.dart';
 import 'package:cyclecheck/src/data/settings/settings_repository.dart';
 
 class SettingsBloc extends ChangeNotifier {
-  final SettingsRepository _settingsRepository;
+  final SettingsRepo _settingsRepository;
 
   CycleScoreSettings _settings = CycleScoreSettings.defaultSettings;
   CycleScoreSettings get settings => _settings;

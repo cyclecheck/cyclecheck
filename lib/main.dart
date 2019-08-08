@@ -9,15 +9,15 @@ import 'package:cyclecheck/src/ui/nav.dart';
 void main() => runApp(CycleCheck());
 
 class CycleCheck extends StatelessWidget {
-  final _settingsRepository = SettingsRepository();
-  final _locationRepository = LocationRepository();
+  final _settingsRepository = SettingsRepo();
+  final _locationRepository = LocationRepo();
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        Provider<SettingsRepository>.value(value: _settingsRepository),
-        Provider<LocationRepository>.value(value: _locationRepository),
+        Provider<SettingsRepo>.value(value: _settingsRepository),
+        Provider<LocationRepo>.value(value: _locationRepository),
       ],
       child: MaterialApp(
         title: 'CycleCheck',
