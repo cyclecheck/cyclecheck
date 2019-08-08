@@ -1,3 +1,4 @@
+import 'package:cyclecheck/src/ui/screens/about/about_url_item.dart';
 import 'package:flutter/material.dart';
 import 'package:package_info/package_info.dart';
 
@@ -41,6 +42,10 @@ class AboutScreen extends StatelessWidget {
           padding: const EdgeInsets.only(bottom: 16.0),
         ),
         ...AboutUrl.items,
+        AboutUrlItem(
+          AboutUrl("About", Icons.help, null),
+          onTap: () => showAboutDialog(context: context),
+        )
       ],
     );
   }

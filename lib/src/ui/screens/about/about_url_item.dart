@@ -5,8 +5,13 @@ import 'about_url.dart';
 
 class AboutUrlItem extends StatelessWidget {
   final AboutUrl _url;
+  final Function onTap;
 
-  const AboutUrlItem(this._url);
+  const AboutUrlItem(
+    this._url, {
+    Key key,
+    this.onTap,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +31,7 @@ class AboutUrlItem extends StatelessWidget {
         ),
       ),
       onTap: () {
-        _launchUrl(_url.url);
+        onTap != null ? onTap() : _launchUrl(_url.url);
       },
     );
   }

@@ -33,7 +33,7 @@ class TemperatureSettings extends StatelessWidget {
           ],
         ),
         Text(
-          "Your ideal temperature ${bloc.settings.degrees(values.start)} and ${bloc.settings.degrees(values.end)}.",
+          "Your ideal temperature is between ${bloc.settings.degrees(values.start)} and ${bloc.settings.degrees(values.end)}.",
         )
       ],
     );

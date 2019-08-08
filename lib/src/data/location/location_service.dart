@@ -15,7 +15,7 @@ class LocationService {
 
   Future<Position> getCurrentPosition() {
     return _geolocator.getCurrentPosition(
-      desiredAccuracy: LocationAccuracy.lowest,
+      desiredAccuracy: LocationAccuracy.low,
     );
   }
 

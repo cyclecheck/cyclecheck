@@ -28,6 +28,7 @@ class Screen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       appBar: appBar ??
           AppBar(
             backgroundColor: titleColor ?? Colors.transparent,

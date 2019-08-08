@@ -32,12 +32,29 @@ class LocationBloc extends ChangeNotifier {
         ..currentPlaceSuccess = true
         ..place = place;
     } on PlatformException {
+      print("PLATFORM ERROR");
       _state.currentPlaceError = LocationErrors.PERMISSION_DENIED;
     } catch (error) {
+      print("ERROR: $error");
       _state.currentPlaceError = LocationErrors.GENERIC;
     }
 
     _state.loading = false;
+    notifyListeners();
+  }
+
+  Future<List<AutoCompletePlace>> search(String input) {
+    return _locationRepository.searchPlace(input);
+  }
+
+  setSelectedPlace(String placeId) async {
+    _state.loading = true;
+    notifyListeners();
+
+    final result = await _locationRepository.getPlaceDetails(placeId);
+    await _settingsRepository.savePlace(result);
+    _state.place = result;
+
     notifyListeners();
   }
 }

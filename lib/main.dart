@@ -36,7 +36,7 @@ class CycleCheck extends StatelessWidget {
       buttonColor: AppColors.primary,
       scaffoldBackgroundColor: AppColors.primary,
       textTheme: base.textTheme.copyWith(
-        headline: TextStyle(fontSize: 60.0, color: AppColors.textColor),
+        // headline: TextStyle(fontSize: 60.0, color: AppColors.textColor),
         title: TextStyle(fontSize: 35, color: AppColors.textColor),
         subtitle: TextStyle(fontSize: 18, color: AppColors.textColor),
         body1: TextStyle(fontSize: 15, color: AppColors.textColor),
