@@ -32,10 +32,8 @@ class LocationBloc extends ChangeNotifier {
         ..currentPlaceSuccess = true
         ..place = place;
     } on PlatformException {
-      print("PLATFORM ERROR");
       _state.currentPlaceError = LocationErrors.PERMISSION_DENIED;
     } catch (error) {
-      print("ERROR: $error");
       _state.currentPlaceError = LocationErrors.GENERIC;
     }
 
@@ -64,12 +62,14 @@ class LocationState {
   bool loading;
   bool currentPlaceSuccess;
   LocationErrors currentPlaceError;
+  List<AutoCompletePlace> searchSuggestions;
 
   LocationState({
     this.place,
     this.loading = false,
     this.currentPlaceSuccess = false,
     this.currentPlaceError,
+    this.searchSuggestions = const [],
   });
 }
 

@@ -110,33 +110,74 @@ class SearchLocationButton extends StatelessWidget {
     showDialog(
       context: context,
       builder: (context) {
-        return SimpleDialog(
-          children: [
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 16),
-              child: TypeAheadField<AutoCompletePlace>(
-                textFieldConfiguration: TextFieldConfiguration(
-                  autofocus: true,
-                  decoration: InputDecoration(
-                    hintText: "Search",
-                  ),
-                  textCapitalization: TextCapitalization.words,
-                  style: TextStyle(fontSize: 16),
-                ),
-                suggestionsCallback: (input) => bloc.search(input),
-                onSuggestionSelected: (place) =>
-                    bloc.setSelectedPlace(place.id),
-                itemBuilder: (context, suggestion) {
-                  return ListTile(
-                    leading: Icon(Icons.place),
-                    title: Text(suggestion.name),
-                  );
-                },
-              ),
-            ),
-          ],
-        );
+        return LocationSearch(bloc: bloc);
       },
     );
   }
 }
+
+class LocationSearch extends StatefulWidget {
+  final LocationBloc bloc;
+
+  LocationSearch({Key key, @required this.bloc}) : super(key: key);
+
+  _LocationSearchState createState() => _LocationSearchState();
+}
+
+class _LocationSearchState extends State<LocationSearch> {
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      type: MaterialType.transparency,
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 16),
+        child: TypeAheadField<AutoCompletePlace>(
+          textFieldConfiguration: TextFieldConfiguration(
+            autofocus: true,
+            decoration: InputDecoration.collapsed(
+              hintText: "Search...",
+            ),
+            textCapitalization: TextCapitalization.words,
+            style: TextStyle(fontSize: 16),
+          ),
+          suggestionsCallback: (input) => widget.bloc.search(input),
+          onSuggestionSelected: (place) =>
+              widget.bloc.setSelectedPlace(place.id),
+          itemBuilder: (context, suggestion) {
+            return ListTile(
+              leading: Icon(Icons.place),
+              title: Text(suggestion.name),
+            );
+          },
+        ),
+      ),
+    );
+  }
+}
+
+// return SimpleDialog(
+//           children: [
+//             Container(
+//               padding: EdgeInsets.symmetric(horizontal: 16),
+//               child: TypeAheadField<AutoCompletePlace>(
+//                 textFieldConfiguration: TextFieldConfiguration(
+//                   autofocus: true,
+//                   decoration: InputDecoration(
+//                     hintText: "Search",
+//                   ),
+//                   textCapitalization: TextCapitalization.words,
+//                   style: TextStyle(fontSize: 16),
+//                 ),
+//                 suggestionsCallback: (input) => bloc.search(input),
+//                 onSuggestionSelected: (place) =>
+//                     bloc.setSelectedPlace(place.id),
+//                 itemBuilder: (context, suggestion) {
+//                   return ListTile(
+//                     leading: Icon(Icons.place),
+//                     title: Text(suggestion.name),
+//                   );
+//                 },
+//               ),
+//             ),
+//           ],
+//         );
