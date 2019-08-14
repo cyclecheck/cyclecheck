@@ -1,9 +1,9 @@
-import 'package:cyclecheck_api/cyclecheck_api.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:provider/provider.dart';
 
 import 'package:cyclecheck/src/config/styles.dart';
+import 'package:cyclecheck/src/data/location/location.repository.dart';
+import 'package:cyclecheck/src/ui/widgets/location_search_dialog.dart';
 import 'package:cyclecheck/src/ui/screens/settings/blocs/location_bloc.dart';
 import 'package:cyclecheck/src/ui/widgets/accent_outline_button.dart';
 
@@ -33,11 +33,14 @@ class LocationSettings extends StatelessWidget {
                 SearchLocationButton(),
               ],
             ),
-            if (state.place != null)
-              Padding(
-                padding: EdgeInsets.only(top: 8),
-                child: Text("Selected: ${state.place.city}"),
+            Padding(
+              padding: EdgeInsets.only(top: 8),
+              child: Text(
+                state.place == null
+                    ? "No location selected."
+                    : "You've selected ${state.place.shortName}.",
               ),
+            ),
           ],
         );
       },
@@ -71,7 +74,7 @@ class LocationButton extends StatelessWidget {
                 statusIcon,
                 size: 14,
               ),
-            )
+            ),
         ],
       ),
     );
@@ -105,72 +108,11 @@ class SearchLocationButton extends StatelessWidget {
     );
   }
 
-  _showPlaceSearchDialog(BuildContext context) {
-    final bloc = Provider.of<LocationBloc>(context);
-    showDialog(
-      context: context,
-      builder: (context) {
-        return LocationSearch(bloc: bloc);
-      },
-    );
-  }
-}
-
-class LocationSearch extends StatefulWidget {
-  final LocationBloc bloc;
-
-  LocationSearch({Key key, @required this.bloc}) : super(key: key);
-
-  _LocationSearchState createState() => _LocationSearchState();
-}
-
-class _LocationSearchState extends State<LocationSearch> {
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      type: MaterialType.transparency,
-      child: Container(
-        padding: EdgeInsets.only(left: 32, right: 32, top: 16),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-              decoration: BoxDecoration(
-                color: Theme.of(context).primaryColor,
-                borderRadius: BorderRadius.all(Radius.circular(16)),
-              ),
-              child: TypeAheadField<AutoCompletePlace>(
-                suggestionsBoxVerticalOffset: 14,
-                suggestionsBoxDecoration: SuggestionsBoxDecoration(
-                  color: Theme.of(context).primaryColor,
-                  elevation: 0,
-                  borderRadius: BorderRadius.vertical(
-                    bottom: Radius.circular(16),
-                  ),
-                ),
-                textFieldConfiguration: TextFieldConfiguration(
-                  autofocus: true,
-                  decoration: InputDecoration.collapsed(
-                    hintText: "Search...",
-                  ),
-                  textCapitalization: TextCapitalization.words,
-                  style: TextStyle(fontSize: 16),
-                ),
-                suggestionsCallback: (input) => widget.bloc.search(input),
-                onSuggestionSelected: (place) =>
-                    widget.bloc.setSelectedPlace(place.id),
-                itemBuilder: (context, suggestion) {
-                  return ListTile(
-                    leading: Icon(Icons.place),
-                    title: Text(suggestion.name),
-                  );
-                },
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+  _showPlaceSearchDialog(BuildContext context) async {
+    final repo = Provider.of<LocationRepo>(context);
+    final result = await Navigator.of(context).push(LocationSearch(repo));
+    if (result != null) {
+      Provider.of<LocationBloc>(context).setSelectedPlace(result.id);
+    }
   }
 }

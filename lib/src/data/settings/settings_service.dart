@@ -14,10 +14,26 @@ class SettingsService {
     _prefsProvider = prefsProvider ?? () => SharedPreferences.getInstance();
   }
 
-  Future<bool> isFirstRun() async => _bool(
-        _Keys.isFirstRun,
-        defaultValue: true,
+  Future<int> devModeCount() async => _int(
+        _Keys.devModeCount,
+        defaultValue: 0,
       );
+
+  Future<bool> saveDevModeCount({int count}) async {
+    final prefs = await _prefsProvider();
+    final newValue = count ?? (await devModeCount()) + 1;
+    return prefs.setInt(_Keys.devModeCount, newValue);
+  }
+
+  Future<bool> completedOnboarding() async => _bool(
+        _Keys.completedOnboarding,
+        defaultValue: false,
+      );
+
+  Future<bool> saveCompletedOnboarding(bool completed) async {
+    final prefs = await _prefsProvider();
+    return prefs.setBool(_Keys.completedOnboarding, completed);
+  }
 
   Future<Unit> getUnit() async {
     try {
@@ -92,7 +108,8 @@ class SettingsService {
 }
 
 class _Keys {
-  static const String isFirstRun = 'is_first_run';
+  static const String devModeCount = 'developer_mode_count';
+  static const String completedOnboarding = 'has_completed_onboarding';
   static const String units = 'units';
   static const String selectedPlace = 'place';
   static const String minTemperature = 'minimum_temperature';

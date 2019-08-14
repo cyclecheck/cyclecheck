@@ -1,11 +1,11 @@
+import 'package:cyclecheck/src/config/dimens.dart';
+import 'package:cyclecheck/src/data/settings/settings_repository.dart';
+import 'package:cyclecheck/src/di/blocs.dart';
+import 'package:cyclecheck/src/ui/screens/settings/blocs/hidden_settings_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:cyclecheck/src/config/colors.dart';
-import 'package:cyclecheck/src/data/location/location.repository.dart';
-import 'package:cyclecheck/src/data/settings/settings_repository.dart';
-import 'package:cyclecheck/src/ui/screens/settings/blocs/location_bloc.dart';
-import 'package:cyclecheck/src/ui/screens/settings/blocs/settings_bloc.dart';
 import 'package:cyclecheck/src/ui/screens/settings/widgets/advanced_settings.dart';
 import 'package:cyclecheck/src/ui/screens/settings/widgets/location_settings.dart';
 import 'package:cyclecheck/src/ui/screens/settings/widgets/unit_settings.dart';
@@ -18,31 +18,53 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProxyProvider<SettingsRepo, SettingsBloc>(
-          builder: (_, repo, bloc) => bloc ?? SettingsBloc(repo),
-        ),
-        ChangeNotifierProxyProvider2<SettingsRepo, LocationRepo, LocationBloc>(
-          builder: (_, settings, location, bloc) =>
-              bloc ?? LocationBloc(settings, location),
-        ),
+        BlocProvider.settings(),
+        BlocProvider.location(),
       ],
       child: Screen(
         titleText: Text("Settings"),
         titleColor: AppColors.primary,
         scrollable: true,
         children: [
-          Padding(
-            padding: const EdgeInsets.only(bottom: 16.0),
+          SettingGroup(
             child: LocationSettings(),
           ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 16.0),
+          SettingGroup(
             child: UnitSettings(),
           ),
-          AdvancedSettings(),
-          Padding(padding: const EdgeInsets.only(top: 16.0)),
+          SettingGroup(
+            child: AdvancedSettings(),
+          ),
+          if (Provider.of<HiddenSettingsBloc>(context).state.isDeveloperMode)
+            SettingGroup(
+              child: HiddenSettings(),
+            ),
+          Padding(padding: const EdgeInsets.only(top: 20.0)),
         ],
       ),
+    );
+  }
+}
+
+class SettingGroup extends StatelessWidget {
+  final Widget child;
+  final double bottomPadding;
+  final EdgeInsets padding;
+
+  const SettingGroup({
+    Key key,
+    @required this.child,
+    this.bottomPadding = Dimens.setting_group_bottom_padding,
+    this.padding,
+  })  : assert(child != null),
+        assert(bottomPadding != null || padding != null),
+        super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: padding ?? EdgeInsets.only(bottom: bottomPadding),
+      child: child,
     );
   }
 }

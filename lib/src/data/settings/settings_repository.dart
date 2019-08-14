@@ -1,3 +1,4 @@
+import 'package:cyclecheck/src/config/constants.dart';
 import 'package:cyclecheck_api/cyclecheck_api.dart';
 
 import 'package:cyclecheck/src/data/settings/settings_service.dart';
@@ -13,6 +14,22 @@ class SettingsRepo {
   }) {
     _settingsService = service ?? SettingsService();
   }
+
+  Future<bool> isDeveloperMode() async {
+    final count = await _settingsService.devModeCount();
+    return count >= Constants.count_for_dev_mode;
+  }
+
+  Future<void> resetDeveloperMode() =>
+      _settingsService.saveDevModeCount(count: 0);
+
+  Future<void> incrementDevModeCount() => _settingsService.saveDevModeCount();
+
+  Future<bool> hasCompletedOnboarding() =>
+      _settingsService.completedOnboarding();
+
+  setCompletedOnboarding(bool completed) =>
+      _settingsService.saveCompletedOnboarding(completed);
 
   Future<CycleScoreSettings> getCycleScoreSettings() async {
     final values = await Future.wait([

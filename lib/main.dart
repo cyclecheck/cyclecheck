@@ -1,3 +1,4 @@
+import 'package:cyclecheck/src/di/blocs.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -18,11 +19,12 @@ class CycleCheck extends StatelessWidget {
       providers: [
         Provider<SettingsRepo>.value(value: _settingsRepository),
         Provider<LocationRepo>.value(value: _locationRepository),
+        BlocProvider.hiddenSettings(),
       ],
       child: MaterialApp(
         title: 'CycleCheck',
         theme: _buildTheme(),
-        initialRoute: Nav.initialRoute(context),
+        initialRoute: Nav.initialRoute,
         routes: Nav.buildRoutes(context),
       ),
     );

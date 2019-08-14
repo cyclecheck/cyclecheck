@@ -1,3 +1,4 @@
+import 'package:cyclecheck/src/ui/screens/spash/splash_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'package:cyclecheck/src/ui/screens/welcome/welcome_screen.dart';
@@ -6,19 +7,20 @@ import 'package:cyclecheck/src/ui/screens/home/home_screen.dart';
 import 'package:cyclecheck/src/ui/screens/settings/settings_screen.dart';
 
 class Nav {
-  static String initialRoute(BuildContext context) {
-    // TODO: Get the value from the sharedpreferences
-    bool isFirstRun = true;
-    return isFirstRun ? WelcomeScreen.routeName : HomeScreen.routeName;
-  }
+  static String get initialRoute => SplashScreen.routeName;
 
   static Map<String, WidgetBuilder> buildRoutes(BuildContext context) {
     return {
+      SplashScreen.routeName: (context) => SplashScreen(),
       WelcomeScreen.routeName: (context) => WelcomeScreen(),
       HomeScreen.routeName: (context) => HomeScreen(),
       SettingsScreen.routeName: (context) => SettingsScreen(),
       AboutScreen.routeName: (context) => AboutScreen(),
     };
+  }
+
+  static toSplash(BuildContext context) {
+    _navigate(context, SplashScreen.routeName, clear: true);
   }
 
   static toWelcome(BuildContext context) {

@@ -6,8 +6,8 @@ import 'package:cyclecheck/src/data/location/location.repository.dart';
 import 'package:cyclecheck/src/data/settings/settings_repository.dart';
 
 class LocationBloc extends ChangeNotifier {
-  final SettingsRepo _settingsRepository;
   final LocationRepo _locationRepository;
+  final SettingsRepo _settingsRepository;
 
   LocationState _state = LocationState();
   LocationState get state => _state;

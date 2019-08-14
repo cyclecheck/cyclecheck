@@ -1,4 +1,6 @@
+import 'package:cyclecheck/src/data/settings/settings_repository.dart';
 import 'package:cyclecheck/src/ui/screens/about/about_url_item.dart';
+import 'package:cyclecheck/src/ui/screens/settings/blocs/hidden_settings_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:package_info/package_info.dart';
 
@@ -6,6 +8,7 @@ import 'package:cyclecheck/src/config/assets.dart';
 import 'package:cyclecheck/src/ui/screens/about/about_url.dart';
 import 'package:cyclecheck/src/ui/screens/widgets/screen.dart';
 import 'package:cyclecheck/src/ui/widgets/empty.dart';
+import 'package:provider/provider.dart';
 
 class AboutScreen extends StatelessWidget {
   static const routeName = '/about';
@@ -15,6 +18,8 @@ class AboutScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final hiddenSettings = Provider.of<HiddenSettingsBloc>(context);
+
     return Screen(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -33,11 +38,16 @@ class AboutScreen extends StatelessWidget {
         FutureBuilder<String>(
           future: _getVersionAndBuildNumber(),
           builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-            return snapshot.hasData
-                ? Text(snapshot.data, style: theme.textTheme.subtitle)
-                : Empty.min();
+            return !snapshot.hasData
+                ? Empty.min()
+                : GestureDetector(
+                    onTap: hiddenSettings.incrementDevModeCount,
+                    child: Text(snapshot.data, style: theme.textTheme.subtitle),
+                  );
           },
         ),
+        if (hiddenSettings.state.isDeveloperMode)
+          Text("Devleoper mode enabled"),
         Padding(
           padding: const EdgeInsets.only(bottom: 16.0),
         ),
