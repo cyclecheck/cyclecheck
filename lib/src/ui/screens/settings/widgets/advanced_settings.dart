@@ -54,6 +54,15 @@ class HiddenSettings extends StatelessWidget {
         ),
         Row(
           children: [
+            Text("Show onboarding"),
+            Switch(
+              value: !bloc.state.showOnboarding,
+              onChanged: (value) => bloc.toggleOnboardingFlag(),
+            )
+          ],
+        ),
+        Row(
+          children: [
             Text("Developer mode"),
             Switch(
               value: bloc.state.isDeveloperMode,

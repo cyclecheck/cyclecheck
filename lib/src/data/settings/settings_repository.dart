@@ -28,8 +28,12 @@ class SettingsRepo {
   Future<bool> hasCompletedOnboarding() =>
       _settingsService.completedOnboarding();
 
-  setCompletedOnboarding(bool completed) =>
-      _settingsService.saveCompletedOnboarding(completed);
+  Future<bool> toggleOnboardingFlag() async {
+    final value = !(await hasCompletedOnboarding());
+    _settingsService.saveCompletedOnboarding(value);
+
+    return value;
+  }
 
   Future<CycleScoreSettings> getCycleScoreSettings() async {
     final values = await Future.wait([

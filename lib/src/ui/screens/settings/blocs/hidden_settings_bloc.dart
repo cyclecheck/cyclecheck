@@ -1,4 +1,3 @@
-import 'package:cyclecheck/src/config/constants.dart';
 import 'package:flutter/material.dart';
 
 import 'package:cyclecheck/src/data/settings/settings_repository.dart';
@@ -15,7 +14,7 @@ class HiddenSettingsBloc extends ChangeNotifier {
 
   _init() async {
     _state
-      ..toggleOnboarding = !(await _repo.hasCompletedOnboarding())
+      ..showOnboarding = await _repo.hasCompletedOnboarding()
       ..isDeveloperMode = await _repo.isDeveloperMode();
 
     notifyListeners();
@@ -34,6 +33,11 @@ class HiddenSettingsBloc extends ChangeNotifier {
     await _updateIsDevMode();
   }
 
+  toggleOnboardingFlag() async {
+    _state.showOnboarding = await _repo.toggleOnboardingFlag();
+    notifyListeners();
+  }
+
   _updateIsDevMode() async {
     _state.isDeveloperMode = await _repo.isDeveloperMode();
     notifyListeners();
@@ -42,5 +46,5 @@ class HiddenSettingsBloc extends ChangeNotifier {
 
 class HiddenSettingsState {
   bool isDeveloperMode = false;
-  bool toggleOnboarding = false;
+  bool showOnboarding = false;
 }
