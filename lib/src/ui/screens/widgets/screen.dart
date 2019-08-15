@@ -10,6 +10,8 @@ class Screen extends StatelessWidget {
   final Widget titleText;
   final Color titleColor;
   final bool scrollable;
+  final double width;
+  final BoxConstraints constraints;
 
   const Screen({
     Key key,
@@ -22,6 +24,8 @@ class Screen extends StatelessWidget {
     this.titleText,
     this.titleColor,
     this.scrollable = false,
+    this.width = double.infinity,
+    this.constraints,
   })  : assert(children != null),
         super(key: key);
 
@@ -47,7 +51,8 @@ class Screen extends StatelessWidget {
   Widget _buildBody() => SafeArea(
         child: Container(
             margin: margin,
-            width: double.infinity,
+            width: width,
+            constraints: constraints,
             child: scrollable
                 ? SingleChildScrollView(child: _buildContent())
                 : _buildContent()),

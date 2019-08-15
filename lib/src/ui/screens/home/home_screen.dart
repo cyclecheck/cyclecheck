@@ -13,7 +13,7 @@ class HomeScreen extends StatelessWidget {
         Text('CycleCheck Home screen'),
         RaisedButton(
           child: Text('Welcome'),
-          onPressed: () => Nav.toWelcome(context),
+          onPressed: () => Nav.toOnboarding(context),
         ),
         RaisedButton(
           child: Text('Settings'),

@@ -10,7 +10,7 @@ class Constants {
   static const MAX_VALUE_WIND = 70.0;
 
   /// Amount of milliseconds to delay the loading of the splash screen.
-  static const DELAY_SPLASH_SCREEN = 1000;
+  static const DELAY_SPLASH_SCREEN = 0;
 
   /// Number of times a user must tap the secret button to enable developer mode.
   static const count_for_dev_mode = 8;

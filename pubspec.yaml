@@ -16,6 +16,7 @@ dependencies:
   cupertino_icons: ^0.1.2
   geolocator: ^5.1.1
   flutter_typeahead: ^1.6.1
+  weather_icons: ^2.0.0
 
   cyclecheck_api:
     path: ../cyclecheck_api

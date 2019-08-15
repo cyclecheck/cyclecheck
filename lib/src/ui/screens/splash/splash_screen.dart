@@ -1,10 +1,10 @@
-import 'package:cyclecheck/src/config/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:cyclecheck/src/config/assets.dart';
-import 'package:cyclecheck/src/ui/nav.dart';
+import 'package:cyclecheck/src/config/constants.dart';
 import 'package:cyclecheck/src/data/settings/settings_repository.dart';
+import 'package:cyclecheck/src/ui/nav.dart';
 
 class SplashScreen extends StatelessWidget {
   static const routeName = 'splash';
@@ -41,6 +41,6 @@ class SplashScreen extends StatelessWidget {
 
     await settingsRepo.hasCompletedOnboarding()
         ? Nav.toHome(context)
-        : Nav.toWelcome(context);
+        : Nav.toOnboarding(context);
   }
 }

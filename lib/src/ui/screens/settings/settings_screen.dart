@@ -1,12 +1,12 @@
-import 'package:cyclecheck/src/config/dimens.dart';
-import 'package:cyclecheck/src/data/settings/settings_repository.dart';
-import 'package:cyclecheck/src/di/blocs.dart';
-import 'package:cyclecheck/src/ui/screens/settings/blocs/hidden_settings_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:cyclecheck/src/config/colors.dart';
+import 'package:cyclecheck/src/config/dimens.dart';
+import 'package:cyclecheck/src/di/blocs.dart';
+import 'package:cyclecheck/src/ui/screens/settings/blocs/hidden_settings_bloc.dart';
 import 'package:cyclecheck/src/ui/screens/settings/widgets/advanced_settings.dart';
+import 'package:cyclecheck/src/ui/screens/settings/widgets/hidden_settings.dart';
 import 'package:cyclecheck/src/ui/screens/settings/widgets/location_settings.dart';
 import 'package:cyclecheck/src/ui/screens/settings/widgets/unit_settings.dart';
 import 'package:cyclecheck/src/ui/screens/widgets/screen.dart';
@@ -25,6 +25,7 @@ class SettingsScreen extends StatelessWidget {
         titleText: Text("Settings"),
         titleColor: AppColors.primary,
         scrollable: true,
+        constraints: BoxConstraints(maxWidth: 325),
         children: [
           SettingGroup(
             child: LocationSettings(),
