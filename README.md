@@ -1,16 +1,49 @@
 # cyclecheck
 
-A new Flutter project.
+A weather app targeted towards cyclists. And will solve the simple question of "Should I bike today"?
 
-## Getting Started
+**Note**: This project is still a work-in-progress
 
-This project is a starting point for a Flutter application.
+## Getting started
 
-A few resources to get you started if this is your first Flutter project:
+There are a couple extra steps to get started as this package relies on `cyclecheck_api` which is not on pub.dev
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+```bash
+# Clone the required repos
+mkdir cyclecheck
+cd cyclecheck
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.dev/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+git clone https://github.com/cyclecheck/cyclecheck
+git clone https://github.com/cyclecheck/cyclecheck_api
+
+# Get the dependencies
+cd cyclecheck_api
+flutter pub get
+
+cd ../cyclecheck
+flutter pub get
+
+# Run the app
+flutter run
+```
+
+## TODO:
+
+- ~~Settings~~
+  - ~~Location~~
+    - ~~GPS and searching~~
+  - ~~Change units (metric/imperial)~~
+  - ~~Wind speed~~
+  - ~~Temperature~~
+  - ~~Hidden settings~~
+    - ~~Enable onboarding~~
+    - disable ads?
+- Onboarding
+  - Show each of the settings one-by-one like a setup wizard
+- Main Screen
+  - Show the CycleScore (Yes, No, Maybe)
+  - Display the alerts if there are any
+  - Display the resons for the score
+  - Show the forecast for the next 8? hours
+- Schedule checks and show notification
+- Add ads, (with option to pay to hide them)
