@@ -4,7 +4,7 @@ import 'package:cyclecheck/src/ui/screens/widgets/screen.dart';
 import 'package:cyclecheck/src/ui/nav.dart';
 
 class HomeScreen extends StatelessWidget {
-  static const routeName = '/';
+  static const routeName = 'home';
 
   @override
   Widget build(BuildContext context) {

@@ -5,17 +5,15 @@ import 'package:cyclecheck/src/ui/screens/widgets/screen.dart';
 import 'package:cyclecheck/src/ui/screens/widgets/screen_header.dart';
 
 class OnboardingScreen extends StatelessWidget {
-  static const routeName = 'welcome';
+  static const String routeName = "onboarding";
 
   final OnboardingPage page;
-  final bool showPrevious;
   final VoidCallback onNext;
 
   OnboardingScreen({
     Key key,
     @required this.page,
     @required this.onNext,
-    this.showPrevious = false,
   })  : assert(page != null),
         assert(onNext != null),
         super(key: key);
@@ -32,12 +30,9 @@ class OnboardingScreen extends StatelessWidget {
         Expanded(child: page),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 8.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              if (page.showPrevious) PreviousButton(),
-              ContinueButton(onPressed: onNext)
-            ],
+          child: Align(
+            alignment: Alignment.centerRight,
+            child: ContinueButton(onPressed: onNext),
           ),
         ),
       ],
@@ -47,12 +42,10 @@ class OnboardingScreen extends StatelessWidget {
 
 abstract class OnboardingPage extends StatelessWidget {
   final String title;
-  final bool showPrevious;
 
   OnboardingPage(
     this.title, {
     Key key,
-    this.showPrevious,
   })  : assert(title != null),
         super(key: key);
 }

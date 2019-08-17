@@ -24,15 +24,7 @@ class LocationSettings extends StatelessWidget {
                 style: Styles.txt_setting_title,
               ),
             ),
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                LocationButton(),
-                Padding(padding: EdgeInsets.symmetric(horizontal: 4)),
-                SearchLocationButton(),
-              ],
-            ),
+            LocationButtons(),
             Padding(
               padding: EdgeInsets.only(top: 8),
               child: Text(
@@ -48,10 +40,25 @@ class LocationSettings extends StatelessWidget {
   }
 }
 
-class LocationButton extends StatelessWidget {
+class LocationButtons extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        CurrentLocationButton(),
+        Padding(padding: EdgeInsets.symmetric(horizontal: 4)),
+        SearchLocationButton(),
+      ],
+    );
+  }
+}
+
+class CurrentLocationButton extends StatelessWidget {
   final String text;
 
-  const LocationButton({
+  const CurrentLocationButton({
     Key key,
     this.text = "Current",
   }) : super(key: key);

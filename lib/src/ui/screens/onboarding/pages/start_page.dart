@@ -4,6 +4,8 @@ import 'package:weather_icons/weather_icons.dart';
 import 'package:cyclecheck/src/ui/screens/onboarding/onboarding_screen.dart';
 
 class StartPage extends OnboardingPage {
+  static const routeName = "start";
+
   final double _iconSize = 38.0;
   final double _spacerSize = 24.0;
 

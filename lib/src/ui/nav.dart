@@ -1,34 +1,59 @@
+import 'package:cyclecheck/src/ui/screens/onboarding/pages/advanced_page.dart';
+import 'package:cyclecheck/src/ui/screens/onboarding/pages/final_page.dart';
 import 'package:flutter/material.dart';
 
 import 'package:cyclecheck/src/ui/screens/about/about_screen.dart';
 import 'package:cyclecheck/src/ui/screens/home/home_screen.dart';
+import 'package:cyclecheck/src/ui/screens/onboarding/pages/location_page.dart';
+import 'package:cyclecheck/src/ui/screens/onboarding/pages/units_page.dart';
 import 'package:cyclecheck/src/ui/screens/settings/settings_screen.dart';
 import 'package:cyclecheck/src/ui/screens/splash/splash_screen.dart';
 import 'package:cyclecheck/src/ui/screens/onboarding/pages/start_page.dart';
 import 'package:cyclecheck/src/ui/screens/onboarding/onboarding_screen.dart';
 
 class Nav {
+  static const String _onboardingRoute = "onboarding";
+
   static String get initialRoute => SplashScreen.routeName;
 
   static Map<String, WidgetBuilder> buildRoutes(BuildContext context) {
     return {
       SplashScreen.routeName: (context) => SplashScreen(),
-      OnboardingScreen.routeName: (context) => OnboardingScreen(
-            page: StartPage(),
-            onNext: () {},
-          ),
       HomeScreen.routeName: (context) => HomeScreen(),
       SettingsScreen.routeName: (context) => SettingsScreen(),
       AboutScreen.routeName: (context) => AboutScreen(),
-    };
+    }..addAll(_onboardingRoutes);
   }
+
+  static final Map<String, WidgetBuilder> _onboardingRoutes = {
+    OnboardingScreen.routeName: (context) => OnboardingScreen(
+          page: StartPage(),
+          onNext: () => _navigate(context, UnitsPage.routeName),
+        ),
+    UnitsPage.routeName: (context) => OnboardingScreen(
+          page: UnitsPage(),
+          onNext: () => _navigate(context, LocationPage.routeName),
+        ),
+    LocationPage.routeName: (context) => OnboardingScreen(
+          page: LocationPage(),
+          onNext: () => _navigate(context, FinalPage.routeName),
+        ),
+    FinalPage.routeName: (context) => OnboardingScreen(
+          page: FinalPage(),
+          onNext: () => toHome(context),
+        ),
+    AdvancedPage.routeName: (context) => OnboardingScreen(
+          page: AdvancedPage(),
+          onNext: () {},
+        ),
+  };
 
   static toSplash(BuildContext context) {
     _navigate(context, SplashScreen.routeName, clear: true);
   }
 
   static toOnboarding(BuildContext context) {
-    _navigate(context, OnboardingScreen.routeName, clear: true);
+    _navigate(context, _onboardingRoute, clear: true);
   }
 
   static toHome(BuildContext context) {
@@ -48,8 +73,10 @@ class Nav {
     String destination, {
     bool clear = false,
   }) {
-    final navMethod =
-        clear ? Navigator.pushReplacementNamed : Navigator.pushNamed;
-    navMethod(context, destination);
+    final nav = Navigator.of(context);
+
+    clear
+        ? nav.pushNamedAndRemoveUntil(destination, (_) => false)
+        : nav.pushNamed(destination);
   }
 }
