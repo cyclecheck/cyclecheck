@@ -28,13 +28,7 @@ class OnboardingScreen extends StatelessWidget {
       constraints: BoxConstraints(maxWidth: 330),
       children: [
         Expanded(child: page),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0),
-          child: Align(
-            alignment: Alignment.centerRight,
-            child: ContinueButton(onPressed: onNext),
-          ),
-        ),
+        OnboardingContinueButton(onNext),
       ],
     );
   }
@@ -48,4 +42,21 @@ abstract class OnboardingPage extends StatelessWidget {
     Key key,
   })  : assert(title != null),
         super(key: key);
+}
+
+class OnboardingContinueButton extends StatelessWidget {
+  final VoidCallback onNext;
+
+  OnboardingContinueButton(this.onNext) : assert(onNext != null);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 16.0),
+      child: Align(
+        alignment: Alignment.centerRight,
+        child: ContinueButton(onPressed: onNext),
+      ),
+    );
+  }
 }

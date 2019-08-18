@@ -32,6 +32,7 @@ flutter run
 - ~~Settings~~
   - ~~Location~~
     - ~~GPS and searching~~
+    - Add error handling to the location requests
   - ~~Change units (metric/imperial)~~
   - ~~Wind speed~~
   - ~~Temperature~~
@@ -47,3 +48,4 @@ flutter run
   - Show the forecast for the next 8? hours
 - Schedule checks and show notification
 - Add ads, (with option to pay to hide them)
+- Global "no internet" banner

@@ -88,9 +88,9 @@ class CurrentLocationButton extends StatelessWidget {
   }
 
   IconData _getStatusIcon(LocationState state) {
-    if (state.currentPlaceSuccess || state.place != null) return Icons.check;
+    if (state.currentPlaceSuccess) return Icons.check;
     if (state.currentPlaceError != null) return Icons.error;
-    return null;
+    return Icons.location_on;
   }
 }
 
