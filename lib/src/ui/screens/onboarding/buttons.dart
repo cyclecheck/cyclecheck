@@ -14,7 +14,7 @@ class PreviousButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return AccentIconButton(
       text: "Previous",
-      leading: Icons.arrow_back,
+      leading: Icon(Icons.arrow_back),
       onPressed: onPressed ?? Navigator.of(context).pop(),
     );
   }
@@ -32,7 +32,7 @@ class ContinueButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return AccentIconButton(
       text: "Continue",
-      trailing: Icons.arrow_forward,
+      trailing: Icon(Icons.arrow_forward),
       onPressed: onPressed,
     );
   }

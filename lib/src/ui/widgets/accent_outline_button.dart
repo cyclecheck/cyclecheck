@@ -1,7 +1,7 @@
+import 'package:flutter/material.dart';
+
 import 'package:cyclecheck/src/config/colors.dart';
 import 'package:cyclecheck/src/config/dimens.dart';
-
-import 'package:flutter/material.dart';
 
 class AccentOutlineButton extends StatelessWidget {
   final VoidCallback onPressed;

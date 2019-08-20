@@ -45,7 +45,6 @@ class StartPage extends OnboardingPage {
           ),
           Text(
             "In order for CycleCheck to work, we will need some basic information from you.  Press continue below to get started!",
-            style: TextStyle(fontSize: 18),
           ),
         ],
       ),

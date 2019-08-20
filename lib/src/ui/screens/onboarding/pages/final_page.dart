@@ -1,17 +1,96 @@
-import 'package:flutter/material.dart';
-
+import 'package:cyclecheck/src/config/dimens.dart';
+import 'package:cyclecheck/src/data/settings/settings_repository.dart';
 import 'package:cyclecheck/src/ui/screens/onboarding/onboarding_screen.dart';
+import 'package:cyclecheck/src/ui/screens/settings/blocs/settings_bloc.dart';
+import 'package:cyclecheck/src/ui/screens/settings/widgets/temperature_settings.dart';
+import 'package:cyclecheck/src/ui/screens/settings/widgets/windspeed_settings.dart';
+import 'package:cyclecheck/src/ui/screens/widgets/screen.dart';
+import 'package:cyclecheck/src/ui/screens/widgets/screen_header.dart';
+import 'package:cyclecheck/src/ui/widgets/accent_icon_button.dart';
+import 'package:cyclecheck/src/ui/widgets/expanded_column.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class FinalPage extends OnboardingPage {
+class FinalPage extends StatelessWidget {
   static const routeName = "final";
 
-  FinalPage() : super("Ready to go!");
+  final VoidCallback onNext;
+
+  FinalPage({
+    Key key,
+    @required this.onNext,
+  })  : assert(onNext != null),
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 300,
-      color: Colors.pink,
+    return Screen(
+      header: ScreenHeader(
+        text: "Almost done!",
+        dividerWidth: 300,
+      ),
+      constraints: Dimens.onboarding_page_width,
+      children: [
+        ExpandedColumn(
+          children: [
+            Text(
+              "Congradulations on making it this far!",
+              style: Theme.of(context).textTheme.headline,
+            ),
+            Padding(padding: EdgeInsets.only(bottom: 32)),
+            Icon(Icons.directions_bike, size: 100),
+            Padding(padding: EdgeInsets.only(bottom: 32)),
+            Text(
+              "You're close to the finish line!  By default CycleCheck scores the weather based on a few criteria, like temperature, windspeed and precipitation.",
+            ),
+            Padding(padding: EdgeInsets.only(bottom: 16)),
+            Text(
+                "If you want some control over those variables, then you can configure them below.  If not, just smash that finish button!"),
+            Padding(padding: EdgeInsets.only(bottom: 16)),
+            ChangeNotifierProxyProvider<SettingsRepo, SettingsBloc>(
+              builder: (_, repo, previous) => previous ?? SettingsBloc(repo),
+              child: AccentIconButton(
+                text: "Configure advanced settings",
+                trailing: Icon(Icons.settings, size: 17),
+                onPressed: () => _showAdvancedSettings(context),
+              ),
+            )
+          ],
+        ),
+        OnboardingContinueButton(
+          onNext,
+          continueButton: AccentIconButton(
+            text: "Finish",
+            trailing: Icon(Icons.check),
+            onPressed: onNext,
+          ),
+        )
+      ],
+    );
+  }
+
+  _showAdvancedSettings(BuildContext context) {
+    showBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Consumer<SettingsBloc>(
+          builder: (context, value, child) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 16),
+                  child: TemperatureSettings(),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 16),
+                  child: WindSpeedSettings(),
+                ),
+              ],
+            );
+          },
+        );
+      },
     );
   }
 }

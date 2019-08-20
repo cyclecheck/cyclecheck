@@ -37,10 +37,7 @@ class Nav {
     LocationPage.routeName: (context) => LocationPage(
           onNext: () => _navigate(context, FinalPage.routeName),
         ),
-    FinalPage.routeName: (context) => OnboardingScreen(
-          page: FinalPage(),
-          onNext: () => toHome(context),
-        ),
+    FinalPage.routeName: (context) => FinalPage(onNext: () => toHome(context)),
     AdvancedPage.routeName: (context) => OnboardingScreen(
           page: AdvancedPage(),
           onNext: () {},

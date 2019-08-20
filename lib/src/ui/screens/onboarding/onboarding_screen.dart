@@ -1,3 +1,4 @@
+import 'package:cyclecheck/src/config/dimens.dart';
 import 'package:flutter/material.dart';
 
 import 'package:cyclecheck/src/ui/screens/onboarding/buttons.dart';
@@ -25,7 +26,7 @@ class OnboardingScreen extends StatelessWidget {
         text: page.title,
         dividerWidth: 300,
       ),
-      constraints: BoxConstraints(maxWidth: 330),
+      constraints: Dimens.onboarding_page_width,
       children: [
         Expanded(child: page),
         OnboardingContinueButton(onNext),
@@ -46,8 +47,14 @@ abstract class OnboardingPage extends StatelessWidget {
 
 class OnboardingContinueButton extends StatelessWidget {
   final VoidCallback onNext;
+  final Widget continueButton;
 
-  OnboardingContinueButton(this.onNext) : assert(onNext != null);
+  OnboardingContinueButton(
+    this.onNext, {
+    Key key,
+    this.continueButton,
+  })  : assert(onNext != null),
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +62,7 @@ class OnboardingContinueButton extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 16.0),
       child: Align(
         alignment: Alignment.centerRight,
-        child: ContinueButton(onPressed: onNext),
+        child: continueButton ?? ContinueButton(onPressed: onNext),
       ),
     );
   }
