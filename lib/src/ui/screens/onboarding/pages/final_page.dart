@@ -1,7 +1,9 @@
+import 'package:cyclecheck/src/config/colors.dart';
 import 'package:cyclecheck/src/config/dimens.dart';
 import 'package:cyclecheck/src/data/settings/settings_repository.dart';
 import 'package:cyclecheck/src/ui/screens/onboarding/onboarding_screen.dart';
 import 'package:cyclecheck/src/ui/screens/settings/blocs/settings_bloc.dart';
+import 'package:cyclecheck/src/ui/screens/settings/widgets/advanced_settings.dart';
 import 'package:cyclecheck/src/ui/screens/settings/widgets/temperature_settings.dart';
 import 'package:cyclecheck/src/ui/screens/settings/widgets/windspeed_settings.dart';
 import 'package:cyclecheck/src/ui/screens/widgets/screen.dart';
@@ -35,10 +37,10 @@ class FinalPage extends StatelessWidget {
           children: [
             Text(
               "Congradulations on making it this far!",
-              style: Theme.of(context).textTheme.headline,
+              style: TextStyle(fontSize: 18),
             ),
             Padding(padding: EdgeInsets.only(bottom: 32)),
-            Icon(Icons.directions_bike, size: 100),
+            Icon(Icons.directions_bike, size: 80),
             Padding(padding: EdgeInsets.only(bottom: 32)),
             Text(
               "You're close to the finish line!  By default CycleCheck scores the weather based on a few criteria, like temperature, windspeed and precipitation.",
@@ -47,14 +49,7 @@ class FinalPage extends StatelessWidget {
             Text(
                 "If you want some control over those variables, then you can configure them below.  If not, just smash that finish button!"),
             Padding(padding: EdgeInsets.only(bottom: 16)),
-            ChangeNotifierProxyProvider<SettingsRepo, SettingsBloc>(
-              builder: (_, repo, previous) => previous ?? SettingsBloc(repo),
-              child: AccentIconButton(
-                text: "Configure advanced settings",
-                trailing: Icon(Icons.settings, size: 17),
-                onPressed: () => _showAdvancedSettings(context),
-              ),
-            )
+            _AdvancedSettingsButton(),
           ],
         ),
         OnboardingContinueButton(
@@ -68,27 +63,47 @@ class FinalPage extends StatelessWidget {
       ],
     );
   }
+}
+
+class _AdvancedSettingsButton extends StatelessWidget {
+  const _AdvancedSettingsButton({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AccentIconButton(
+      text: "Configure advanced settings",
+      trailing: Icon(Icons.settings, size: 17),
+      onPressed: () => _showAdvancedSettings(context),
+    );
+  }
 
   _showAdvancedSettings(BuildContext context) {
-    showBottomSheet(
+    showModalBottomSheet(
       context: context,
+      backgroundColor: AppColors.primary,
       builder: (BuildContext context) {
-        return Consumer<SettingsBloc>(
-          builder: (context, value, child) {
-            return Column(
+        return Container(
+          padding: EdgeInsets.only(left: 32, right: 32, top: 32),
+          child: ChangeNotifierProxyProvider<SettingsRepo, SettingsBloc>(
+            builder: (_, repo, previous) => previous ?? SettingsBloc(repo),
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 16),
-                  child: TemperatureSettings(),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 16),
-                  child: WindSpeedSettings(),
-                ),
+                AdvancedSettings(),
+                Padding(padding: EdgeInsets.only(bottom: 32)),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: AccentIconButton(
+                    text: "Finished",
+                    trailing: Icon(Icons.arrow_downward),
+                    onPressed: () => Navigator.of(context).pop(),
+                  ),
+                )
               ],
-            );
-          },
+            ),
+          ),
         );
       },
     );
