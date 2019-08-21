@@ -30,7 +30,7 @@ class Screen extends StatelessWidget {
     this.scrollable = false,
     this.width = double.infinity,
     this.constraints,
-    this.providers,
+    this.providers = const [],
   })  : assert(children != null),
         super(key: key);
 
