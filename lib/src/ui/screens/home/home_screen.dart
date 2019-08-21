@@ -38,9 +38,11 @@ class HomeScreen extends StatelessWidget {
         Padding(padding: EdgeInsets.only(bottom: 32)),
         Text("Details", style: Theme.of(context).textTheme.subtitle),
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          padding: const EdgeInsets.only(top: 8.0, bottom: 4.0),
           child: AccentLine(width: double.infinity),
         ),
+        Text("Last updated 20 minutes ago."),
+        Padding(padding: EdgeInsets.only(bottom: 16)),
       ],
     );
   }
