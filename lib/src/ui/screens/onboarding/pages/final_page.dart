@@ -4,8 +4,6 @@ import 'package:cyclecheck/src/data/settings/settings_repository.dart';
 import 'package:cyclecheck/src/ui/screens/onboarding/onboarding_screen.dart';
 import 'package:cyclecheck/src/ui/screens/settings/blocs/settings_bloc.dart';
 import 'package:cyclecheck/src/ui/screens/settings/widgets/advanced_settings.dart';
-import 'package:cyclecheck/src/ui/screens/settings/widgets/temperature_settings.dart';
-import 'package:cyclecheck/src/ui/screens/settings/widgets/windspeed_settings.dart';
 import 'package:cyclecheck/src/ui/screens/widgets/screen.dart';
 import 'package:cyclecheck/src/ui/screens/widgets/screen_header.dart';
 import 'package:cyclecheck/src/ui/widgets/accent_icon_button.dart';
@@ -55,11 +53,13 @@ class FinalPage extends StatelessWidget {
         OnboardingContinueButton(
           onNext,
           continueButton: AccentIconButton(
-            text: "Finish",
-            trailing: Icon(Icons.check),
-            onPressed: onNext,
-          ),
-        )
+              text: "Finish",
+              trailing: Icon(Icons.check),
+              onPressed: () {
+                Provider.of<SettingsRepo>(context).toggleOnboardingFlag();
+                onNext();
+              }),
+        ),
       ],
     );
   }
@@ -86,23 +86,23 @@ class _AdvancedSettingsButton extends StatelessWidget {
       builder: (BuildContext context) {
         return Container(
           padding: EdgeInsets.only(left: 32, right: 32, top: 32),
-          child: ChangeNotifierProxyProvider<SettingsRepo, SettingsBloc>(
-            builder: (_, repo, previous) => previous ?? SettingsBloc(repo),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                AdvancedSettings(),
-                Padding(padding: EdgeInsets.only(bottom: 32)),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: AccentIconButton(
-                    text: "Finished",
-                    trailing: Icon(Icons.arrow_downward),
-                    onPressed: () => Navigator.of(context).pop(),
-                  ),
-                )
-              ],
-            ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ChangeNotifierProxyProvider<SettingsRepo, SettingsBloc>(
+                builder: (_, repo, previous) => previous ?? SettingsBloc(repo),
+                child: AdvancedSettings(),
+              ),
+              Padding(padding: EdgeInsets.only(bottom: 32)),
+              Align(
+                alignment: Alignment.centerRight,
+                child: AccentIconButton(
+                  text: "Finished",
+                  trailing: Icon(Icons.arrow_downward),
+                  onPressed: () => Navigator.of(context).pop(),
+                ),
+              )
+            ],
           ),
         );
       },

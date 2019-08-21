@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Screen extends StatelessWidget {
   final Widget header;
@@ -7,11 +8,13 @@ class Screen extends StatelessWidget {
   final MainAxisAlignment mainAxisAlignment;
   final CrossAxisAlignment crossAxisAlignment;
   final AppBar appBar;
+  final List<Widget> appBarActions;
   final Widget titleText;
   final Color titleColor;
   final bool scrollable;
   final double width;
   final BoxConstraints constraints;
+  final List<SingleChildCloneableWidget> providers;
 
   const Screen({
     Key key,
@@ -21,11 +24,13 @@ class Screen extends StatelessWidget {
     this.mainAxisAlignment = MainAxisAlignment.start,
     this.crossAxisAlignment = CrossAxisAlignment.start,
     this.appBar,
+    this.appBarActions,
     this.titleText,
     this.titleColor,
     this.scrollable = false,
     this.width = double.infinity,
     this.constraints,
+    this.providers,
   })  : assert(children != null),
         super(key: key);
 
@@ -33,12 +38,7 @@ class Screen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      appBar: appBar ??
-          AppBar(
-            backgroundColor: titleColor ?? Colors.transparent,
-            elevation: 0,
-            title: titleText,
-          ),
+      appBar: appBar ?? _buildAppBar(),
       body: header == null
           ? Padding(
               padding: EdgeInsets.only(top: 16.0),
@@ -47,6 +47,13 @@ class Screen extends StatelessWidget {
           : _buildBody(),
     );
   }
+
+  Widget _buildAppBar() => AppBar(
+        backgroundColor: titleColor ?? Colors.transparent,
+        elevation: 0,
+        title: titleText,
+        actions: appBarActions,
+      );
 
   Widget _buildBody() => SafeArea(
         child: Container(
@@ -58,7 +65,14 @@ class Screen extends StatelessWidget {
                 : _buildContent()),
       );
 
-  Widget _buildContent() => Column(
+  Widget _buildContent() => providers.isNotEmpty
+      ? MultiProvider(
+          providers: providers,
+          child: _buildColumn(),
+        )
+      : _buildColumn();
+
+  Widget _buildColumn() => Column(
         crossAxisAlignment: crossAxisAlignment,
         mainAxisAlignment: mainAxisAlignment,
         children: [

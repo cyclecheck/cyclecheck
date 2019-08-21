@@ -1,3 +1,4 @@
+import 'package:cyclecheck/src/util/debouncer.dart';
 import 'package:flutter/foundation.dart';
 import 'package:cyclecheck_api/cyclecheck_api.dart';
 
@@ -5,6 +6,7 @@ import 'package:cyclecheck/src/data/settings/settings_repository.dart';
 
 class SettingsBloc extends ChangeNotifier {
   final SettingsRepo _settingsRepository;
+  final Debouncer _debouncer = Debouncer(milliseconds: 300);
 
   CycleScoreSettings _settings = CycleScoreSettings.defaultSettings;
   CycleScoreSettings get settings => _settings;
@@ -33,7 +35,9 @@ class SettingsBloc extends ChangeNotifier {
       CycleScoreSettings(minTemp: min.round(), maxTemp: max.round()),
     );
 
-    save(settings);
+    _debouncer.run(() => save(_settings));
+    _settings = settings;
+    notifyListeners();
   }
 
   setWindSpeed(double speed) {

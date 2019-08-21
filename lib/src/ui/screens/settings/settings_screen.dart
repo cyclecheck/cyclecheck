@@ -1,3 +1,4 @@
+import 'package:cyclecheck/src/ui/nav.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -25,6 +26,12 @@ class SettingsScreen extends StatelessWidget {
         titleText: Text("Settings"),
         titleColor: AppColors.primary,
         scrollable: true,
+        appBarActions: [
+          IconButton(
+            icon: Icon(Icons.help_outline),
+            onPressed: () => Nav.toAbout(context),
+          ),
+        ],
         constraints: BoxConstraints(maxWidth: 325),
         children: [
           SettingGroup(
