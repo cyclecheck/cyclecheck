@@ -44,12 +44,9 @@ abstract class _MinMaxTempDisplay extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
+        BoxedIcon(icon),
         Column(
-          children: [
-            Icon(icon),
-          ],
-        ),
-        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               "$value°",
