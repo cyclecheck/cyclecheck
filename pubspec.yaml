@@ -17,6 +17,7 @@ dependencies:
   geolocator: ^5.1.1
   flutter_typeahead: ^1.6.1
   weather_icons: ^2.0.0
+  intl: ^0.15.8
 
   cyclecheck_api:
     path: ../cyclecheck_api
