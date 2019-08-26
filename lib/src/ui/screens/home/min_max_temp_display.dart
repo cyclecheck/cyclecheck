@@ -4,7 +4,7 @@ import 'package:weather_icons/weather_icons.dart';
 class MinTempDisplay extends _MinMaxTempDisplay {
   const MinTempDisplay({
     Key key,
-    @required double value,
+    @required int value,
   }) : super(
           key: key,
           value: value,
@@ -16,7 +16,7 @@ class MinTempDisplay extends _MinMaxTempDisplay {
 class MaxTempDisplay extends _MinMaxTempDisplay {
   const MaxTempDisplay({
     Key key,
-    @required double value,
+    @required int value,
   }) : super(
           key: key,
           value: value,
@@ -28,7 +28,7 @@ class MaxTempDisplay extends _MinMaxTempDisplay {
 abstract class _MinMaxTempDisplay extends StatelessWidget {
   final IconData icon;
   final String text;
-  final double value;
+  final int value;
 
   const _MinMaxTempDisplay({
     Key key,

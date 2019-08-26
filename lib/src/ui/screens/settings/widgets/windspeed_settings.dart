@@ -1,3 +1,4 @@
+import 'package:cyclecheck_api/cyclecheck_api.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -13,6 +14,7 @@ class WindSpeedSettings extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text("Wind Speed:"),
             Slider(
@@ -21,7 +23,13 @@ class WindSpeedSettings extends StatelessWidget {
               max: Constants.MAX_VALUE_WIND,
               activeColor: AppColors.accent,
               inactiveColor: AppColors.primaryDark,
-              onChanged: (value) => bloc.setWindSpeed(value),
+              onChanged: (value) => bloc.setWindSpeed(value.round()),
+            ),
+            IconButton(
+              icon: Icon(Icons.restore, size: 22),
+              onPressed: () => bloc.setWindSpeed(
+                CycleScoreSettings.DEFAULT_MAX_WIND,
+              ),
             ),
           ],
         ),

@@ -1,3 +1,5 @@
+import 'package:cyclecheck/src/data/cyclescore/cyclescore_repository.dart';
+import 'package:cyclecheck/src/ui/screens/home/bloc/cyclescore_bloc.dart';
 import 'package:provider/provider.dart';
 
 import 'package:cyclecheck/src/data/location/location.repository.dart';
@@ -20,5 +22,10 @@ class BlocProvider {
   static hiddenSettings() =>
       ChangeNotifierProxyProvider<SettingsRepo, HiddenSettingsBloc>(
         builder: (_, repo, bloc) => bloc ?? HiddenSettingsBloc(repo),
+      );
+
+  static cycleScore() =>
+      ChangeNotifierProxyProvider<CycleScoreRepo, CycleScoreBloc>(
+        builder: (_, repo, bloc) => bloc ?? CycleScoreBloc(repo),
       );
 }

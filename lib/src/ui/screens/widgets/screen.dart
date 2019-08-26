@@ -20,7 +20,7 @@ class Screen extends StatelessWidget {
     Key key,
     this.header,
     @required this.children,
-    this.margin = const EdgeInsets.symmetric(horizontal: 32.0),
+    this.margin = const EdgeInsets.only(left: 32.0),
     this.mainAxisAlignment = MainAxisAlignment.start,
     this.crossAxisAlignment = CrossAxisAlignment.start,
     this.appBar,
@@ -39,12 +39,7 @@ class Screen extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: appBar ?? _buildAppBar(),
-      body: header == null
-          ? Padding(
-              padding: EdgeInsets.only(top: 16.0),
-              child: _buildBody(),
-            )
-          : _buildBody(),
+      body: _buildBody(),
     );
   }
 
@@ -56,21 +51,24 @@ class Screen extends StatelessWidget {
       );
 
   Widget _buildBody() => SafeArea(
-        child: Container(
-            margin: margin,
-            width: width,
-            constraints: constraints,
-            child: scrollable
-                ? SingleChildScrollView(child: _buildContent())
-                : _buildContent()),
+        child: scrollable
+            ? SingleChildScrollView(
+                child: _buildContainer(),
+              )
+            : _buildContainer(),
       );
 
-  Widget _buildContent() => providers.isNotEmpty
-      ? MultiProvider(
-          providers: providers,
-          child: _buildColumn(),
-        )
-      : _buildColumn();
+  Widget _buildContainer() => Container(
+        margin: margin,
+        width: width,
+        constraints: constraints,
+        child: providers.isNotEmpty
+            ? MultiProvider(
+                providers: providers,
+                child: _buildColumn(),
+              )
+            : _buildColumn(),
+      );
 
   Widget _buildColumn() => Column(
         crossAxisAlignment: crossAxisAlignment,

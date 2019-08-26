@@ -32,8 +32,9 @@ class SettingsScreen extends StatelessWidget {
             onPressed: () => Nav.toAbout(context),
           ),
         ],
-        constraints: BoxConstraints(maxWidth: 325),
+        constraints: BoxConstraints(maxWidth: 330),
         children: [
+          Padding(padding: EdgeInsets.only(bottom: 16)),
           SettingGroup(
             child: LocationSettings(),
           ),

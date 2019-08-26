@@ -14,4 +14,7 @@ class Constants {
 
   /// Number of times a user must tap the secret button to enable developer mode.
   static const count_for_dev_mode = 8;
+
+  /// Number of hours to show for forecast.
+  static const hours_of_forecast = 8;
 }

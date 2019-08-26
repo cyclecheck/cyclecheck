@@ -82,6 +82,8 @@ class SettingsRepo {
   /// Get the saved Google Place for use with the weather service.
   Future<Place> getSavedPlace() => _settingsService.getPlace();
 
+  Future<String> getSavedPlaceId() async => (await getSavedPlace()).id;
+
   /// Save the selected Place.
   savePlace(Place place) {
     _settingsService.savePlace(place);

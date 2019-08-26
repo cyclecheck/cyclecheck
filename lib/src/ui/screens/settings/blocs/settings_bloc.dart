@@ -20,31 +20,29 @@ class SettingsBloc extends ChangeNotifier {
     notifyListeners();
   }
 
-  save(CycleScoreSettings settings) async {
+  _save(CycleScoreSettings settings) async {
     await _settingsRepository.saveCycleScoreSettings(settings);
     _settings = settings;
     notifyListeners();
   }
 
   setUnit(Unit unit) {
-    save(_settings.merge(CycleScoreSettings(units: unit)));
+    _save(_settings.merge(CycleScoreSettings(units: unit)));
   }
 
-  setTemperatures(double min, double max) {
+  setTemperatures(int min, int max) {
     final settings = _settings.merge(
-      CycleScoreSettings(minTemp: min.round(), maxTemp: max.round()),
+      CycleScoreSettings(minTemp: min, maxTemp: max),
     );
 
-    _debouncer.run(() => save(_settings));
+    _debouncer.run(() => _save(_settings));
     _settings = settings;
     notifyListeners();
   }
 
-  setWindSpeed(double speed) {
-    final settings = _settings.merge(
-      CycleScoreSettings(maxWind: speed.round()),
-    );
+  setWindSpeed(int speed) {
+    final settings = _settings.merge(CycleScoreSettings(maxWind: speed));
 
-    save(settings);
+    _save(settings);
   }
 }

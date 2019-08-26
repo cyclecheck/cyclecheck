@@ -1,3 +1,4 @@
+import 'package:cyclecheck/src/data/cyclescore/cyclescore_repository.dart';
 import 'package:cyclecheck/src/di/blocs.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -12,6 +13,7 @@ void main() => runApp(CycleCheck());
 class CycleCheck extends StatelessWidget {
   final _settingsRepository = SettingsRepo();
   final _locationRepository = LocationRepo();
+  final _cycleScoreRepository = CycleScoreRepo();
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +21,7 @@ class CycleCheck extends StatelessWidget {
       providers: [
         Provider<SettingsRepo>.value(value: _settingsRepository),
         Provider<LocationRepo>.value(value: _locationRepository),
+        Provider<CycleScoreRepo>.value(value: _cycleScoreRepository),
         BlocProvider.hiddenSettings(),
       ],
       child: MaterialApp(

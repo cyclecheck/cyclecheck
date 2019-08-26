@@ -1,3 +1,4 @@
+import 'package:cyclecheck_api/cyclecheck_api.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -18,6 +19,7 @@ class TemperatureSettings extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text("Temperature:"),
             RangeSlider(
@@ -27,8 +29,15 @@ class TemperatureSettings extends StatelessWidget {
               activeColor: AppColors.accent,
               inactiveColor: AppColors.primaryDark,
               onChanged: (values) {
-                bloc.setTemperatures(values.start, values.end);
+                bloc.setTemperatures(values.start.round(), values.end.round());
               },
+            ),
+            IconButton(
+              icon: Icon(Icons.restore, size: 22),
+              onPressed: () => bloc.setTemperatures(
+                CycleScoreSettings.DEFAULT_MIN_TEMP,
+                CycleScoreSettings.DEFAULT_MAX_TEMP,
+              ),
             ),
           ],
         ),
