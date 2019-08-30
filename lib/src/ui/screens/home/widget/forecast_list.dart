@@ -24,7 +24,7 @@ class ForecastList extends StatelessWidget {
             borderRadius: BorderRadius.circular(Dimens.border_radius),
             child: HourForecast(
               block: bloc.state.forecast[index],
-              isNow: index == 0,
+              isNow: false,
               selected: bloc.state.selected == index,
             ),
           );

@@ -1,11 +1,10 @@
 import 'dart:async';
+import 'package:cyclecheck/src/util/datetime.dart';
+import 'package:cyclecheck_api/cyclecheck_api.dart';
+import 'package:flutter/material.dart';
 
 import 'package:cyclecheck/src/config/constants.dart';
 import 'package:cyclecheck/src/data/cyclescore/cyclescore_repository.dart';
-import 'package:cyclecheck/src/data/settings/settings_repository.dart';
-import 'package:cyclecheck/src/util/debouncer.dart';
-import 'package:cyclecheck_api/cyclecheck_api.dart';
-import 'package:flutter/material.dart';
 
 class CycleScoreBloc extends ChangeNotifier {
   final CycleScoreRepo _cycleScoreRepo;
@@ -30,14 +29,7 @@ class CycleScoreBloc extends ChangeNotifier {
 
     try {
       final score = await _cycleScoreRepo.getScore();
-      final forecast = [
-        score.weather.current,
-        ...score.weather.hourly.sublist(1).take(Constants.hours_of_forecast),
-      ];
-
-      _state
-        ..score = score
-        ..forecast = _filterOutdatedForecast(forecast);
+      _state.setWeather(score);
 
       _createTimer();
     } catch (error) {
@@ -57,20 +49,16 @@ class CycleScoreBloc extends ChangeNotifier {
   _createTimer() {
     _timer?.cancel();
 
-    _timer = Timer.periodic(Duration(minutes: 5), (timer) {
-      _state.forecast = _filterOutdatedForecast(_state.forecast);
+    _timer = Timer.periodic(Constants.stale_forecast_duration, (timer) {
+      _state.filterForecast();
       notifyListeners();
     });
   }
 
-  List<WeatherBlock> _filterOutdatedForecast(List<WeatherBlock> list) => list
-      .where((item) => item.forecastedTime.isAfter(DateTime.now()))
-      .toList();
-
   @override
   void dispose() {
-    super.dispose();
     _timer.cancel();
+    super.dispose();
   }
 }
 
@@ -80,6 +68,20 @@ class CycleScoreState {
   List<WeatherBlock> forecast;
   String error;
   int selected;
+
+  setWeather(CycleScore value) {
+    score = value;
+    forecast = _filterOutdatedForecast(
+      value.weather.hourly.take(Constants.hours_of_forecast).toList(),
+    );
+  }
+
+  filterForecast() {
+    final filtered = _filterOutdatedForecast(forecast);
+    final diff = forecast.length - filtered.length;
+    print("Ran filter... removed $diff values");
+    forecast = filtered;
+  }
 
   CycleScoreState({
     this.score,
@@ -91,4 +93,7 @@ class CycleScoreState {
 
   WeatherBlock get selectedWeather =>
       forecast.isNotEmpty ? forecast[selected] : null;
+
+  List<WeatherBlock> _filterOutdatedForecast(List<WeatherBlock> list) =>
+      list.where((item) => currentHourOrFuture(item.forecastedTime)).toList();
 }
