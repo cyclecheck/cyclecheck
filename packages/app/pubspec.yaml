@@ -22,7 +22,7 @@ dependencies:
   auto_size_text: ^2.1.0
 
   cyclecheck_api:
-    path: ../cyclecheck_api
+    path: ../api
 
 dev_dependencies:
   flutter_test:

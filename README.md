@@ -4,27 +4,32 @@ A weather app targeted towards cyclists. And will solve the simple question of "
 
 **Note**: This project is still a work-in-progress
 
-## Getting started
+This repository is a monorepo, and all the packages are located in [./packages](./packages).
 
-There are a couple extra steps to get started as this package relies on `cyclecheck_api` which is not on pub.dev
+### Packages
+
+  - `api`
+    - Contains all the logic for interacting with the CycleCheck API.
+  - `app`
+    - Mobile version of CycleCheck.
+
+Included are some scripts to help with the monorepo.
+
+  - `deps.sh`: Will run `flutter pub get` in each package.
+  - `cmd`: Allows you to run any command in the context of a package.
+
+## Getting started
 
 ```bash
 # Clone the required repos
-mkdir cyclecheck
-cd cyclecheck
-
 git clone https://github.com/cyclecheck/cyclecheck
-git clone https://github.com/cyclecheck/cyclecheck_api
 
 # Get the dependencies
-cd cyclecheck_api
-flutter pub get
-
-cd ../cyclecheck
-flutter pub get
+cd cyclecheck
+./deps.sh
 
 # Run the app
-flutter run
+./cmd app flutter run
 ```
 
 ## TODO:
