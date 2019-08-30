@@ -5,7 +5,7 @@ import 'package:weather_icons/weather_icons.dart';
 
 import 'package:cyclecheck/src/config/dimens.dart';
 import 'package:cyclecheck/src/ui/screens/home/bloc/cyclescore_bloc.dart';
-import 'package:cyclecheck/src/ui/screens/home/min_max_temp_display.dart';
+import 'package:cyclecheck/src/ui/screens/home/widget/min_max_temp_display.dart';
 import 'package:cyclecheck/src/ui/screens/home/widget/details_header.dart';
 import 'package:cyclecheck/src/ui/widgets/empty.dart';
 
@@ -19,58 +19,58 @@ class WeatherDetails extends StatelessWidget {
         : Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              DetailsHeader(
-                forecastedTime: state.score.weather.current.forecastedTime,
-              ),
+              DetailsHeader(),
               Padding(padding: EdgeInsets.only(bottom: 16)),
-              ..._buildDetails(state.score.weather, state.selectedWeather),
+              Consumer<CycleScoreBloc>(
+                builder: (context, CycleScoreBloc value, child) =>
+                    _buildDetails(context, state.score.weather, state.selected),
+              ),
               Padding(padding: EdgeInsets.only(bottom: 8)),
             ],
           );
   }
 
-  List<Widget> _buildDetails(Weather weather, WeatherBlock selected) {
-    return [
-      Container(
-        constraints: BoxConstraints(maxWidth: Dimens.max_width_screen),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    MinTempDisplay(value: weather.minTemp),
-                    Padding(padding: EdgeInsets.only(right: 4)),
-                    MaxTempDisplay(value: weather.maxTemp),
-                  ],
-                ),
-                Padding(padding: EdgeInsets.only(bottom: 16)),
-                Text("${weather.minWind}-${weather.maxWind} km/h"),
-                Row(
-                  children: [
-                    Text(weather.wind.name.toLowerCase()),
-                    WindIcon(degree: weather.wind.degree, size: 22),
-                  ],
-                ),
-              ],
-            ),
-            if (selected != null)
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
+  Widget _buildDetails(
+      BuildContext context, Weather weather, WeatherBlock selected) {
+    return Container(
+      constraints: BoxConstraints(maxWidth: Dimens.max_width_screen),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
                 children: [
-                  BoxedIcon(
-                    WeatherIcons.fromString(selected.weatherType),
-                    size: 51,
-                  ),
-                  Text(selected.weatherSummary),
+                  MinTempDisplay(value: weather.minTemp),
+                  Padding(padding: EdgeInsets.only(right: 4)),
+                  MaxTempDisplay(value: weather.maxTemp),
                 ],
               ),
-          ],
-        ),
+              Padding(padding: EdgeInsets.only(bottom: 16)),
+              Text("${weather.minWind}-${weather.maxWind} km/h"),
+              Row(
+                children: [
+                  Text(weather.wind.name.toLowerCase()),
+                  WindIcon(degree: weather.wind.degree, size: 22),
+                ],
+              ),
+            ],
+          ),
+          if (selected != null)
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                BoxedIcon(
+                  WeatherIcons.fromString(selected.weatherType),
+                  size: 51,
+                ),
+                Text(selected.weatherSummary),
+              ],
+            ),
+        ],
       ),
-    ];
+    );
   }
 }

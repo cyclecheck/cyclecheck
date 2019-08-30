@@ -14,20 +14,15 @@ class UnitsPage extends OnboardingPage {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        BlocProvider.settings(),
-      ],
-      child: Container(
-        child: Column(
-          children: [
-            Text("To get started I need to know which units you prefer."),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 32.0),
-              child: _Units(),
-            ),
-          ],
-        ),
+    return Container(
+      child: Column(
+        children: [
+          Text("To get started I need to know which units you prefer."),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 32.0),
+            child: _Units(),
+          ),
+        ],
       ),
     );
   }

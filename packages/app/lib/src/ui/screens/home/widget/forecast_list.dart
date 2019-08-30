@@ -13,21 +13,30 @@ class ForecastList extends StatelessWidget {
 
     return Container(
       height: 180,
-      child: ListView.separated(
+      child: ListView.builder(
         shrinkWrap: true,
         scrollDirection: Axis.horizontal,
         itemCount: bloc.state.forecast.length,
-        separatorBuilder: (context, index) => Divider(),
         itemBuilder: (BuildContext context, int index) {
-          return InkWell(
+          final item = InkWell(
             onTap: () => bloc.setSelected(index),
             borderRadius: BorderRadius.circular(Dimens.border_radius),
             child: HourForecast(
               block: bloc.state.forecast[index],
               isNow: false,
-              selected: bloc.state.selected == index,
+              selected: bloc.state.selectedIndex == index,
             ),
           );
+
+          return index != 0
+              ? item
+              : Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(padding: const EdgeInsets.only(left: 32)),
+                    Container(child: item, height: double.infinity),
+                  ],
+                );
         },
       ),
     );

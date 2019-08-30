@@ -21,7 +21,7 @@ class TemperatureSettings extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text("Temperature:"),
+            Text("Temps:"),
             RangeSlider(
               values: values,
               min: Constants.MAX_VALUE_MIN_TEMP,

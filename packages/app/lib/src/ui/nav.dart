@@ -1,4 +1,3 @@
-import 'package:cyclecheck/src/ui/screens/onboarding/pages/advanced_page.dart';
 import 'package:cyclecheck/src/ui/screens/onboarding/pages/final_page.dart';
 import 'package:flutter/material.dart';
 
@@ -38,10 +37,6 @@ class Nav {
           onNext: () => _navigate(context, FinalPage.routeName),
         ),
     FinalPage.routeName: (context) => FinalPage(onNext: () => toHome(context)),
-    AdvancedPage.routeName: (context) => OnboardingScreen(
-          page: AdvancedPage(),
-          onNext: () {},
-        ),
   };
 
   static toSplash(BuildContext context) {

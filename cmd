@@ -3,29 +3,34 @@
 CWD="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
 
 printUsage() {
-    echo "Usage: cmd <api|app> <flutter command>"
+    echo "Usage: ./cmd <package> <flutter command>"
     echo
-    echo "Run a flutter command in the context of a package."
+    echo "Run a command in the folder context of a package inside of './packages'."
     echo
     echo "Example:"
-    echo "    ./command.sh api flutter pub get"
-    echo "    ./command.sh app flutter run"
+    echo "    ./cmd api flutter pub get"
+    echo "    ./cmd app flutter run"
 }
 
 PACKAGE=$1
 shift
 
 if [[ -z "$PACKAGE" ]]; then
-    echo "No package was passed in!"
+    echo "Error: No package was passed in!"
     echo
     printUsage
     exit 1
 fi
 
-if [[ ! "$PACKAGE" = "api" ]] && [[ ! "$PACKAGE" = "app" ]]; then
-    echo "Unknown package '$PACKAGE'"
-    echo
-    printUsage
+PACKAGES=()
+for FILE in $CWD/packages/*; do
+    [[ -d $FILE ]] && PACKAGES+=("$(basename $FILE)")
+done
+
+echo "Found these packages: [${PACKAGES[@]}]"
+
+if [[ ! " ${PACKAGES[@]} " =~ " ${PACKAGE} " ]]; then
+    echo "Error: '$PACKAGE' was not found in ./packages"
     exit 1
 fi
 

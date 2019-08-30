@@ -2,8 +2,18 @@
 
 CWD="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
 
-cd $CWD/packages/api
-flutter pub get
+RAN=false
+for FOLDER in $CWD/packages/*; do
+  if [[ -d $FOLDER ]] && test -f "$FOLDER/pubspec.yaml"; then
+    echo "Getting depedencies in"
+    echo "$FOLDER"
+    cd $FOLDER
+    flutter pub get
+    RAN=true
+  fi
+done
 
-cd $CWD/packages/app
-flutter pub get
+if [[ ! $RAN ]]; then
+  echo "No suitable flutter folders were found!"
+  exit 1
+fi

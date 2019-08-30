@@ -1,16 +1,12 @@
+import 'package:cyclecheck/src/ui/screens/home/bloc/cyclescore_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:timeago_flutter/timeago_flutter.dart';
 
 import 'package:cyclecheck/src/config/dimens.dart';
 import 'package:cyclecheck/src/ui/widgets/accent_line.dart';
 
 class DetailsHeader extends StatelessWidget {
-  final DateTime forecastedTime;
-
-  const DetailsHeader({
-    @required this.forecastedTime,
-  }) : assert(forecastedTime != null);
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -23,12 +19,16 @@ class DetailsHeader extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 4.0),
             child: AccentLine(width: double.infinity),
           ),
-          Timeago(
-            date: forecastedTime,
-            builder: (_, value) => Text(
-              "Last updated $value",
-              style: TextStyle(fontSize: 10),
-            ),
+          Consumer<CycleScoreBloc>(
+            builder: (context, bloc, child) {
+              return Timeago(
+                date: bloc.state.score.weather.current.forecastedTime,
+                builder: (_, value) => Text(
+                  "Last updated $value",
+                  style: TextStyle(fontSize: 10),
+                ),
+              );
+            },
           ),
         ],
       ),

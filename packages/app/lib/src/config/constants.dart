@@ -16,7 +16,7 @@ class Constants {
   static const count_for_dev_mode = 8;
 
   /// Number of hours to show for forecast.
-  static const hours_of_forecast = 8;
+  static const hours_of_forecast = 12;
 
   static const stale_forecast_duration = const Duration(minutes: 1);
 }

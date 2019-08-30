@@ -89,10 +89,7 @@ class _AdvancedSettingsButton extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ChangeNotifierProxyProvider<SettingsRepo, SettingsBloc>(
-                builder: (_, repo, previous) => previous ?? SettingsBloc(repo),
-                child: AdvancedSettings(),
-              ),
+              AdvancedSettings(),
               Padding(padding: EdgeInsets.only(bottom: 32)),
               Align(
                 alignment: Alignment.centerRight,

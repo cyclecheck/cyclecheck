@@ -1,28 +1,38 @@
-import 'package:cyclecheck/src/data/cyclescore/cyclescore_repository.dart';
-import 'package:cyclecheck/src/di/blocs.dart';
+import 'package:cyclecheck/src/ui/screens/settings/blocs/location_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:cyclecheck/src/config/colors.dart';
+import 'package:cyclecheck/src/data/cyclescore/cyclescore_repository.dart';
 import 'package:cyclecheck/src/data/location/location.repository.dart';
 import 'package:cyclecheck/src/data/settings/settings_repository.dart';
-import 'package:cyclecheck/src/config/colors.dart';
 import 'package:cyclecheck/src/ui/nav.dart';
+import 'package:cyclecheck/src/ui/screens/settings/blocs/hidden_settings_bloc.dart';
+import 'package:cyclecheck/src/ui/screens/settings/blocs/settings_bloc.dart';
 
 void main() => runApp(CycleCheck());
 
 class CycleCheck extends StatelessWidget {
-  final _settingsRepository = SettingsRepo();
-  final _locationRepository = LocationRepo();
-  final _cycleScoreRepository = CycleScoreRepo();
+  final _settingsRepo = SettingsRepo();
+  final _locationRepo = LocationRepo();
+  final _cycleScoreRepo = CycleScoreRepo();
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        Provider<SettingsRepo>.value(value: _settingsRepository),
-        Provider<LocationRepo>.value(value: _locationRepository),
-        Provider<CycleScoreRepo>.value(value: _cycleScoreRepository),
-        BlocProvider.hiddenSettings(),
+        Provider<SettingsRepo>.value(value: _settingsRepo),
+        Provider<LocationRepo>.value(value: _locationRepo),
+        Provider<CycleScoreRepo>.value(value: _cycleScoreRepo),
+        ChangeNotifierProvider<SettingsBloc>.value(
+          value: SettingsBloc(_settingsRepo),
+        ),
+        ChangeNotifierProvider<HiddenSettingsBloc>.value(
+          value: HiddenSettingsBloc(_settingsRepo),
+        ),
+        ChangeNotifierProvider<LocationBloc>.value(
+          value: LocationBloc(_settingsRepo, _locationRepo),
+        ),
       ],
       child: MaterialApp(
         title: 'CycleCheck',

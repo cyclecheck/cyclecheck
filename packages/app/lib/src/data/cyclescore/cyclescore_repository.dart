@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cyclecheck/src/data/settings/settings_repository.dart';
 import 'package:cyclecheck_api/cyclecheck_api.dart';
 

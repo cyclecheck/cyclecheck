@@ -14,7 +14,8 @@ class ScoreDisplay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final state = Provider.of<CycleScoreBloc>(context).state;
-    final selected = state.selectedWeather;
+    final selected = state.selected;
+
     return Container(
       constraints: BoxConstraints(maxWidth: Dimens.max_width_screen),
       child: selected == null
@@ -23,16 +24,16 @@ class ScoreDisplay extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  height: 60,
+                  height: 75,
                   child: Text(
                     "Should you bike ${_getHourText(state)}?",
                     style: Theme.of(context).textTheme.headline,
-                    maxLines: 1,
                   ),
                 ),
                 Text("${_subTitles.get(selected.score.value)},"), // TODO
                 SizedBox(
                   width: Dimens.max_width_screen,
+                  height: 100,
                   child: AutoSizeText(
                     _getAnswerText(selected.score.value),
                     style: TextStyle(fontSize: 90),
@@ -59,10 +60,10 @@ class ScoreDisplay extends StatelessWidget {
   }
 
   String _getHourText(CycleScoreState state) {
-    if (state.selected == 0) return "now";
+    if (state.selectedIndex == 0) return "now";
 
     return timeago.format(
-      state.selectedWeather.forecastedTime,
+      state.selected.forecastedTime,
       allowFromNow: true,
     );
   }

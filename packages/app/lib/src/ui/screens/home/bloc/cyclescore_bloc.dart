@@ -42,7 +42,7 @@ class CycleScoreBloc extends ChangeNotifier {
   }
 
   setSelected(int newIndex) {
-    _state.selected = newIndex;
+    _state.selectedIndex = newIndex;
     notifyListeners();
   }
 
@@ -50,8 +50,9 @@ class CycleScoreBloc extends ChangeNotifier {
     _timer?.cancel();
 
     _timer = Timer.periodic(Constants.stale_forecast_duration, (timer) {
-      _state.filterForecast();
-      notifyListeners();
+      if (_state.filterForecast()) {
+        notifyListeners();
+      }
     });
   }
 
@@ -67,7 +68,7 @@ class CycleScoreState {
   CycleScore score;
   List<WeatherBlock> forecast;
   String error;
-  int selected;
+  int selectedIndex;
 
   setWeather(CycleScore value) {
     score = value;
@@ -76,11 +77,15 @@ class CycleScoreState {
     );
   }
 
-  filterForecast() {
+  bool filterForecast() {
     final filtered = _filterOutdatedForecast(forecast);
     final diff = forecast.length - filtered.length;
-    print("Ran filter... removed $diff values");
-    forecast = filtered;
+    if (diff > 0) {
+      forecast = filtered;
+      return true;
+    }
+
+    return false;
   }
 
   CycleScoreState({
@@ -88,11 +93,11 @@ class CycleScoreState {
     this.forecast = const [],
     this.isLoading = false,
     this.error,
-    this.selected = 0,
+    this.selectedIndex = 0,
   });
 
-  WeatherBlock get selectedWeather =>
-      forecast.isNotEmpty ? forecast[selected] : null;
+  WeatherBlock get selected =>
+      forecast.isNotEmpty ? forecast[selectedIndex] : null;
 
   List<WeatherBlock> _filterOutdatedForecast(List<WeatherBlock> list) =>
       list.where((item) => currentHourOrFuture(item.forecastedTime)).toList();

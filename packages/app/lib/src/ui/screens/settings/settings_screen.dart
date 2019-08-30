@@ -17,40 +17,34 @@ class SettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        BlocProvider.settings(),
-        BlocProvider.location(),
+    return Screen(
+      titleText: Text("Settings"),
+      titleColor: AppColors.primary,
+      scrollable: true,
+      appBarActions: [
+        IconButton(
+          icon: Icon(Icons.help_outline),
+          onPressed: () => Nav.toAbout(context),
+        ),
       ],
-      child: Screen(
-        titleText: Text("Settings"),
-        titleColor: AppColors.primary,
-        scrollable: true,
-        appBarActions: [
-          IconButton(
-            icon: Icon(Icons.help_outline),
-            onPressed: () => Nav.toAbout(context),
-          ),
-        ],
-        constraints: BoxConstraints(maxWidth: 330),
-        children: [
-          Padding(padding: EdgeInsets.only(bottom: 16)),
+      constraints: BoxConstraints(maxWidth: 330),
+      children: [
+        Padding(padding: EdgeInsets.only(bottom: 16)),
+        SettingGroup(
+          child: LocationSettings(),
+        ),
+        SettingGroup(
+          child: UnitSettings(),
+        ),
+        SettingGroup(
+          child: AdvancedSettings(),
+        ),
+        if (Provider.of<HiddenSettingsBloc>(context).state.isDeveloperMode)
           SettingGroup(
-            child: LocationSettings(),
+            child: HiddenSettings(),
           ),
-          SettingGroup(
-            child: UnitSettings(),
-          ),
-          SettingGroup(
-            child: AdvancedSettings(),
-          ),
-          if (Provider.of<HiddenSettingsBloc>(context).state.isDeveloperMode)
-            SettingGroup(
-              child: HiddenSettings(),
-            ),
-          Padding(padding: const EdgeInsets.only(top: 20.0)),
-        ],
-      ),
+        Padding(padding: const EdgeInsets.only(top: 20.0)),
+      ],
     );
   }
 }
