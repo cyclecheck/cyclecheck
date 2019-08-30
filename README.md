@@ -37,20 +37,22 @@ cd cyclecheck
 - ~~Settings~~
   - ~~Location~~
     - ~~GPS and searching~~
-    - Add error handling to the location requests
+    - ~~Add error handling to the location requests~~
   - ~~Change units (metric/imperial)~~
   - ~~Wind speed~~
   - ~~Temperature~~
   - ~~Hidden settings~~
     - ~~Enable onboarding~~
+    - Auto-refresh interval
     - disable ads?
 - Onboarding
-  - Show each of the settings one-by-one like a setup wizard
+  - ~~Show each of the settings one-by-one like a setup wizard~~
 - Main Screen
-  - Show the CycleScore (Yes, No, Maybe)
+  - Show the CycleScore (Yes, No, Maybe) (WIP)
+  - Auto refresh the weather
   - Display the alerts if there are any
   - Display the resons for the score
-  - Show the forecast for the next 8? hours
+  - ~~Show the forecast for the next 8? hours
 - Schedule checks and show notification
 - Add ads, (with option to pay to hide them)
 - Global "no internet" banner
