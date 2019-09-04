@@ -58,7 +58,7 @@ class HomeScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Container(
-                      margin: const EdgeInsets.only(left: 32.0, top: 10.0),
+                      margin: const EdgeInsets.only(left: 32.0, top: 32.0),
                       child: Column(
                         children: [
                           ScoreDisplay(),

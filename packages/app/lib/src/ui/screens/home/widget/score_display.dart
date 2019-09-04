@@ -9,8 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ScoreDisplay extends StatelessWidget {
-  final SubTitles _subTitles = SubTitles();
-
   @override
   Widget build(BuildContext context) {
     final state = Provider.of<CycleScoreBloc>(context).state;
@@ -24,13 +22,12 @@ class ScoreDisplay extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  height: 75,
+                  height: 60,
                   child: Text(
                     "Should you bike ${_getHourText(state)}?",
                     style: Theme.of(context).textTheme.headline,
                   ),
                 ),
-                Text("${_subTitles.get(selected.score.value)},"), // TODO
                 SizedBox(
                   width: Dimens.max_width_screen,
                   height: 100,
@@ -67,42 +64,4 @@ class ScoreDisplay extends StatelessWidget {
       allowFromNow: true,
     );
   }
-}
-
-class SubTitles with RandomText {
-  static const List<String> _absoluteList = [
-    "Absolutely",
-    "For sure",
-  ];
-
-  String get _absolute => randomize(_absoluteList);
-
-  static const List<String> _maybeList = [
-    "Probably",
-  ];
-
-  String get _maybe => randomize(_maybeList);
-
-  static const List<String> _riskyList = [
-    "I wouldn't but",
-  ];
-
-  String get _risky => randomize(_riskyList);
-
-  String get(double score) {
-    if (score >= 0.95)
-      return _absolute;
-    else if (score >= 0.5)
-      return _maybe;
-    else
-      return _risky;
-  }
-}
-
-mixin RandomText {
-  final _random = Random();
-
-  String randomize(List<String> texts) => texts[_randomIndex(texts.length)];
-
-  int _randomIndex(int length) => _random.nextInt(length);
 }
