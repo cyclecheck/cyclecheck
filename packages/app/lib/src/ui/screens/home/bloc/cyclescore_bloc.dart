@@ -41,7 +41,7 @@ class CycleScoreBloc extends ChangeNotifier {
     notifyListeners();
   }
 
-  setSelected(int newIndex) {
+  void setSelected(int newIndex) {
     _state.selectedIndex = newIndex;
     notifyListeners();
   }
@@ -100,5 +100,5 @@ class CycleScoreState {
       forecast.isNotEmpty ? forecast[selectedIndex] : null;
 
   List<WeatherBlock> _filterOutdatedForecast(List<WeatherBlock> list) =>
-      list.where((item) => currentHourOrFuture(item.forecastedTime)).toList();
+      list.where((item) => isCurrentHourOrFuture(item.forecastedTime)).toList();
 }
