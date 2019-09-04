@@ -31,7 +31,10 @@ class WeatherDetails extends StatelessWidget {
   }
 
   Widget _buildDetails(
-      BuildContext context, Weather weather, WeatherBlock selected) {
+    BuildContext context,
+    Weather weather,
+    WeatherBlock selected,
+  ) {
     return Container(
       constraints: BoxConstraints(maxWidth: Dimens.max_width_screen),
       child: Row(
@@ -52,8 +55,8 @@ class WeatherDetails extends StatelessWidget {
               Text("${weather.minWind}-${weather.maxWind} km/h"),
               Row(
                 children: [
-                  Text(weather.wind.name.toLowerCase()),
-                  WindIcon(degree: weather.wind.degree, size: 22),
+                  Text(selected.wind.name.toLowerCase()),
+                  WindIcon(degree: selected.wind.degree, size: 22),
                 ],
               ),
             ],

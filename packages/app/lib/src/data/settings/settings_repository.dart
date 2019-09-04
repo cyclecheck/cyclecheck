@@ -76,7 +76,10 @@ class SettingsRepo {
     if (futures.isEmpty) return true;
 
     final results = await Future.wait(futures);
-    return results.every((wasSuccess) => wasSuccess);
+    final result = results.every((wasSuccess) => wasSuccess);
+    if (result) _cachedSettings = settings;
+
+    return result;
   }
 
   /// Get the saved Google Place for use with the weather service.
