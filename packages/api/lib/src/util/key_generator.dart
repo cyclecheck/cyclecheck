@@ -34,7 +34,7 @@ class KeyGenerator {
     String model = info.name;
     String version = info.systemVersion;
     String hash = _generateHash([model, version, info.identifierForVendor]);
-    return "ios-$model-$version-$hash";
+    return "ios-$hash";
   }
 
   String _generateHash(List<String> args) {
