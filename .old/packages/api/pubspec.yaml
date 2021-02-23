@@ -1,0 +1,23 @@
+name: cyclecheck_api
+description: A new Flutter package project.
+version: 0.0.1
+author: CycleCheck <jordon.dehoog@gmail.com>
+email: jordon.dehoog@gmail.com
+repository: https://github.com/cyclecheck/cyclecheck_api
+homepage: https://cyclecheck.app
+
+environment:
+  sdk: ">=2.1.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  device_info: ^1.0.0
+  crypto: ^2.1.5
+  dio: ^3.0.10
+  weather_icons: ^2.0.2
+  equatable: ^1.2.6
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter

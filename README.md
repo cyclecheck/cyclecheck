@@ -1,58 +1,16 @@
 # cyclecheck
 
-A weather app targeted towards cyclists. And will solve the simple question of "Should I bike today"?
+A new Flutter project.
 
-**Note**: This project is still a work-in-progress
+## Getting Started
 
-This repository is a monorepo, and all the packages are located in [./packages](./packages).
+This project is a starting point for a Flutter application.
 
-### Packages
+A few resources to get you started if this is your first Flutter project:
 
-  - `api`
-    - Contains all the logic for interacting with the CycleCheck API.
-  - `app`
-    - Mobile version of CycleCheck.
+- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
+- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
 
-Included are some scripts to help with the monorepo.
-
-  - `deps.sh`: Will run `flutter pub get` in each package.
-  - `cmd`: Allows you to run any command in the context of a package.
-
-## Getting started
-
-```bash
-# Clone the required repos
-git clone https://github.com/cyclecheck/cyclecheck
-
-# Get the dependencies
-cd cyclecheck
-./deps.sh
-
-# Run the app
-./cmd app flutter run
-```
-
-## TODO:
-
-- ~~Settings~~
-  - ~~Location~~
-    - ~~GPS and searching~~
-    - ~~Add error handling to the location requests~~
-  - ~~Change units (metric/imperial)~~
-  - ~~Wind speed~~
-  - ~~Temperature~~
-  - ~~Hidden settings~~
-    - ~~Enable onboarding~~
-    - Auto-refresh interval
-    - disable ads?
-- Onboarding
-  - ~~Show each of the settings one-by-one like a setup wizard~~
-- Main Screen
-  - Show the CycleScore (Yes, No, Maybe) (WIP)
-  - Auto refresh the weather
-  - Display the alerts if there are any
-  - Display the resons for the score
-  - ~~Show the forecast for the next 8? hours
-- Schedule checks and show notification
-- Add ads, (with option to pay to hide them)
-- Global "no internet" banner
+For help getting started with Flutter, view our
+[online documentation](https://flutter.dev/docs), which offers tutorials,
+samples, guidance on mobile development, and a full API reference.
